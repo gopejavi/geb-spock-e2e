@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.FooterModule
 import Modules.HeaderModule
 import Modules.PageSectionModule
 import geb.Page
@@ -15,11 +16,13 @@ class HomePage extends Page {
 
     static content = {
         header { module HeaderModule }
+        footer { module FooterModule }
 
         mainTitle { $("h1") }
         mainSubtitle { $("#subtitle") }
 
-        pageSection { indexValue -> module new PageSectionModule(index: indexValue) } //parametrized module example
+        //parametrized module example
+        pageSection { indexValue -> module new PageSectionModule(index: indexValue) }
         awesomeSection { pageSection("1") }
         importantStuff { pageSection("2") }
 
