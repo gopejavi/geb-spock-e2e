@@ -5,6 +5,7 @@ import Pages.TermsPage
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
+import spock.lang.Shared
 import spock.lang.Title
 
 @Title("US4: web header")
@@ -16,6 +17,13 @@ So that I can navigate easily to all pages
 @Issue("https://trello.com/c/87HqKCDP")
 class HeaderSpec extends GebReportingSpec {
 
+    @Shared
+            expectedVokuroBrandText = "Vökuró"
+    @Shared
+            expectedHomeLinkText = "Home"
+    @Shared
+            expectedAboutLinkText = "About"
+
     def "I have a header in Home page"() {
         given: "I am at Home page"
         to HomePage
@@ -26,11 +34,11 @@ class HeaderSpec extends GebReportingSpec {
         then: "I see a red header with Vokuro logo"
         // We won't check the "red" in CSS as example about what should be manually tested
         // (even if correct maybe it looks ugly, etc)
-        header.brand.text() == "Vökuró"
+        assert header.brand.text() == expectedVokuroBrandText
 
         and: "links to Home page, About page"
-        header.homeLink.text() == "Home"
-        header.aboutLink.text() == "About"
+        assert header.homeLink.text() == expectedHomeLinkText
+        assert header.aboutLink.text() == expectedAboutLinkText
     }
 
     def "I have a header in About page"() {
@@ -41,11 +49,11 @@ class HeaderSpec extends GebReportingSpec {
         true
 
         then: "I see a red header with Vokuro logo"
-        header.brand.text() == "Vökuró"
+        assert header.brand.text() == expectedVokuroBrandText
 
         and: "links to Home page, About page"
-        header.homeLink.text() == "Home"
-        header.aboutLink.text() == "About"
+        assert header.homeLink.text() == expectedHomeLinkText
+        assert header.aboutLink.text() == expectedAboutLinkText
     }
 
     def "I have a header in Privacy Policy page"() {
@@ -56,11 +64,11 @@ class HeaderSpec extends GebReportingSpec {
         true
 
         then: "I see a red header with Vokuro logo"
-        header.brand.text() == "Vökuró"
+        assert header.brand.text() == expectedVokuroBrandText
 
         and: "links to Home page, About page"
-        header.homeLink.text() == "Home"
-        header.aboutLink.text() == "About"
+        assert header.homeLink.text() == expectedHomeLinkText
+        assert header.aboutLink.text() == expectedAboutLinkText
     }
 
     def "I have a header in Terms page"() {
@@ -71,11 +79,11 @@ class HeaderSpec extends GebReportingSpec {
         true
 
         then: "I see a red header with Vokuro logo"
-        header.brand.text() == "Vökuró"
+        assert header.brand.text() == expectedVokuroBrandText
 
         and: "links to Home page, About page"
-        header.homeLink.text() == "Home"
-        header.aboutLink.text() == "About"
+        assert header.homeLink.text() == expectedHomeLinkText
+        assert header.aboutLink.text() == expectedAboutLinkText
     }
 
     //We decide to perform an extra test to check that links actually work
