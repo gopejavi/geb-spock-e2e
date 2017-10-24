@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.FooterModule
 import Modules.HeaderModule
 import Modules.TitleWithTextModule
 import geb.Page
@@ -16,5 +17,6 @@ class TermsPage extends Page {
     static content = {
         header { module HeaderModule }
         mainPanel { module TitleWithTextModule }
+        footer { module FooterModule }
     }
 }

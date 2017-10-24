@@ -1,4 +1,7 @@
+import Pages.AboutPage
 import Pages.HomePage
+import Pages.PrivacyPolicyPage
+import Pages.TermsPage
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -21,8 +24,60 @@ class FooterSpec extends GebReportingSpec {
         true
 
         then: "I see a footer containing message #expectedMessage"
-        // We won't check the "red" in CSS as example about what should be manually tested
-        // (even if correct maybe it looks ugly, etc)
+        assert footer.text().contains(expectedMessage)
+
+        and: "links to Privacy Policy page, Terms page"
+        assert footer.privacyLink.text() == "Privacy Policy"
+        assert footer.termsLink.text() == "Terms"
+
+        where:
+        expectedMessage = "Made with love"
+    }
+
+    def "I have a header in About page"() {
+        given: "I am at About page"
+        to AboutPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a footer containing message #expectedMessage"
+        assert footer.text().contains(expectedMessage)
+
+        and: "links to Privacy Policy page, Terms page"
+        assert footer.privacyLink.text() == "Privacy Policy"
+        assert footer.termsLink.text() == "Terms"
+
+        where:
+        expectedMessage = "Made with love"
+    }
+
+    def "I have a header in Privacy Policy page"() {
+        given: "I am at Privacy Policy page"
+        to PrivacyPolicyPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a footer containing message #expectedMessage"
+        assert footer.text().contains(expectedMessage)
+
+        and: "links to Privacy Policy page, Terms page"
+        assert footer.privacyLink.text() == "Privacy Policy"
+        assert footer.termsLink.text() == "Terms"
+
+        where:
+        expectedMessage = "Made with love"
+    }
+
+    def "I have a header in Terms page"() {
+        given: "I am at Terms page"
+        to TermsPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a footer containing message #expectedMessage"
         assert footer.text().contains(expectedMessage)
 
         and: "links to Privacy Policy page, Terms page"

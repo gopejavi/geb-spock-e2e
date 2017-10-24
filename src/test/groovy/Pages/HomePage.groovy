@@ -16,7 +16,6 @@ class HomePage extends Page {
 
     static content = {
         header { module HeaderModule }
-        footer { module FooterModule }
 
         mainTitle { $("h1") }
         mainSubtitle { $("#subtitle") }
@@ -31,5 +30,7 @@ class HomePage extends Page {
         officeAddressTitle { officeAddress.$("strong") }
         internetAddress { exampleAddresses.$("address")[1] }
         internetAddressTitle { internetAddress.$("strong") }
+
+        footer { module FooterModule }
     }
 }
