@@ -5,6 +5,7 @@ import Pages.TermsPage
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
+import spock.lang.Shared
 import spock.lang.Title
 
 @Title("US5: Web footer")
@@ -16,6 +17,13 @@ So that I can always see a lovely message and links to Policy and Terms pages
 @Issue("https://trello.com/c/shFUUuDd")
 class FooterSpec extends GebReportingSpec {
 
+    @Shared
+            expectedLovelyMessage = "Made with love"
+    @Shared
+            expectedPrivacyLinkText = "Privacy Policy"
+    @Shared
+            expectedTermsLinkText = "Terms"
+
     def "I have a header in Home page"() {
         given: "I am at Home page"
         to HomePage
@@ -23,15 +31,12 @@ class FooterSpec extends GebReportingSpec {
         when: "I do nothing"
         true
 
-        then: "I see a footer containing message #expectedMessage"
-        assert footer.text().contains(expectedMessage)
+        then: "I see a footer containing message #expectedLovelyMessage"
+        assert footer.text().contains(expectedLovelyMessage)
 
         and: "links to Privacy Policy page, Terms page"
-        assert footer.privacyLink.text() == "Privacy Policy"
-        assert footer.termsLink.text() == "Terms"
-
-        where:
-        expectedMessage = "Made with love"
+        assert footer.privacyLink.text() == expectedPrivacyLinkText
+        assert footer.termsLink.text() == expectedTermsLinkText
     }
 
     def "I have a header in About page"() {
@@ -41,15 +46,12 @@ class FooterSpec extends GebReportingSpec {
         when: "I do nothing"
         true
 
-        then: "I see a footer containing message #expectedMessage"
-        assert footer.text().contains(expectedMessage)
+        then: "I see a footer containing message #expectedLovelyMessage"
+        assert footer.text().contains(expectedLovelyMessage)
 
         and: "links to Privacy Policy page, Terms page"
-        assert footer.privacyLink.text() == "Privacy Policy"
-        assert footer.termsLink.text() == "Terms"
-
-        where:
-        expectedMessage = "Made with love"
+        assert footer.privacyLink.text() == expectedPrivacyLinkText
+        assert footer.termsLink.text() == expectedTermsLinkText
     }
 
     def "I have a header in Privacy Policy page"() {
@@ -59,15 +61,12 @@ class FooterSpec extends GebReportingSpec {
         when: "I do nothing"
         true
 
-        then: "I see a footer containing message #expectedMessage"
-        assert footer.text().contains(expectedMessage)
+        then: "I see a footer containing message #expectedLovelyMessage"
+        assert footer.text().contains(expectedLovelyMessage)
 
         and: "links to Privacy Policy page, Terms page"
-        assert footer.privacyLink.text() == "Privacy Policy"
-        assert footer.termsLink.text() == "Terms"
-
-        where:
-        expectedMessage = "Made with love"
+        assert footer.privacyLink.text() == expectedPrivacyLinkText
+        assert footer.termsLink.text() == expectedTermsLinkText
     }
 
     def "I have a header in Terms page"() {
@@ -78,14 +77,11 @@ class FooterSpec extends GebReportingSpec {
         true
 
         then: "I see a footer containing message #expectedMessage"
-        assert footer.text().contains(expectedMessage)
+        assert footer.text().contains(expectedLovelyMessage)
 
         and: "links to Privacy Policy page, Terms page"
-        assert footer.privacyLink.text() == "Privacy Policy"
-        assert footer.termsLink.text() == "Terms"
-
-        where:
-        expectedMessage = "Made with love"
+        assert footer.privacyLink.text() == expectedPrivacyLinkText
+        assert footer.termsLink.text() == expectedTermsLinkText
     }
 
     //Extra, not in Acceptance Criteria
