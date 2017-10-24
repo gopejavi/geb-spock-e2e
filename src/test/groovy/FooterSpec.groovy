@@ -87,15 +87,28 @@ class FooterSpec extends GebReportingSpec {
         where:
         expectedMessage = "Made with love"
     }
-/*
-    def "Home link navigates to Home page"() {
-        given: "I am at About page"
-        to AboutPage
 
-        when: "I click on About link"
-        header.homeLink.click()
+    //Extra, not in Acceptance Criteria
+    def "Privacy Policy link navigates to Privacy Policy page"() {
+        given: "I am at Home page"
+        to HomePage
 
-        then: "I am at About page"
-        at HomePage
-    }*/
+        when: "I click on Privacy Policy link"
+        footer.privacyLink.click()
+
+        then: "I am at Privacy Policy page"
+        at PrivacyPolicyPage
+    }
+
+    //Extra
+    def "Privacy Policy link navigates to Terms page"() {
+        given: "I am at Home page"
+        to HomePage
+
+        when: "I click on Terms link"
+        footer.termsLink.click()
+
+        then: "I am at Terms page"
+        at TermsPage
+    }
 }
