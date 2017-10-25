@@ -2,7 +2,7 @@ package Pages
 
 import Modules.FooterModule
 import Modules.HeaderModule
-import Modules.TitleWithTextModule
+import Modules.SignupModule
 import geb.Page
 
 class CreateAccountPage extends Page {
@@ -11,12 +11,17 @@ class CreateAccountPage extends Page {
 
     static at = {
         title == "Welcome to Vökuró"
-        mainPanel.title.text() == "Sign Up"
+        mainPanelTitle.text() == "Sign Up"
     }
 
     static content = {
         header { module HeaderModule }
-        mainPanel { module TitleWithTextModule }
+        mainPanelTitle { $("h2") }
+        signupForm { module SignupModule }
         footer { module FooterModule }
+    }
+
+    def fillFormWithData(def signupData) {
+        signupForm.fillFormWithData signupData
     }
 }
