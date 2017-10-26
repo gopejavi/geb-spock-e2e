@@ -17,7 +17,7 @@ jobs:
             Xvfb :99 -screen 1 1280x1024x16 -nolisten tcp -fbdir /var/run > /dev/null 2>&1 &
             export DISPLAY=:99
             export FIREFOX_VERSION=56.0.1
-            ./gradlew --no-daemon chromeHeadlessTest
+            ./gradlew --info -P baseUrl=http://127.0.0.1 --no-daemon chromeHeadlessTest
       - store_artifacts:
           path: build/spock-reports
       - save_cache:
