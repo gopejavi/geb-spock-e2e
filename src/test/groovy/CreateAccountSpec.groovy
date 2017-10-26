@@ -50,8 +50,8 @@ class CreateAccountSpec extends GebReportingSpec {
 
         cleanup:
         println "Restoring Vokuro's DB..."
-        def sql = Sql.newInstance("jdbc:mysql://192.168.99.100?allowMultiQueries=true", "root", "", "com.mysql.cj.jdbc.Driver")
-        sql.execute("use vokuro;" + new File('src/test/groovy/Data/vokuro.sql').text)
+        def sql = Sql.newInstance("jdbc:mysql://$baseUrl/vokuro?allowMultiQueries=true".replace("http://", ""), "root", "", "com.mysql.cj.jdbc.Driver")
+        sql.execute(new File('src/test/groovy/Data/vokuro.sql').text)
 
         where:
         validSignupData << [
