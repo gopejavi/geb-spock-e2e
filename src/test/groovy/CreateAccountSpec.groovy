@@ -1,14 +1,12 @@
 import Classes.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
+import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
-import groovy.sql.Sql
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
 
-//@Grab('mysql:mysql-connector-java:5.1.25')
-//@GrabConfig(systemClassLoader = true)
 @Title("US8: Create Account")
 @Narrative("""
 As an interested user
@@ -49,9 +47,7 @@ class CreateAccountSpec extends GebReportingSpec {
         true //Note: not implemented as app don't send emails.
 
         cleanup:
-        println "Restoring Vokuro's DB..."
-        def sql = Sql.newInstance("jdbc:mysql://$baseUrl/vokuro?allowMultiQueries=true".replace("http://", ""), "root", "", "com.mysql.cj.jdbc.Driver")
-        sql.execute(new File('src/test/groovy/Data/vokuro.sql').text)
+        VokuroDatabase.restoreOriginal()
 
         where:
         validSignupData << [
