@@ -1,7 +1,6 @@
 import Classes.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
-import Utils.Classes
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -129,26 +128,43 @@ class CreateAccountSpec extends GebReportingSpec {
         ]
     }*/
 
-    def "Should not create account if passwords do not match, like #validSignupDataExceptUnmatchingPass.password and #validSignupDataExceptUnmatchingPass.confirmPassword"() {
+    /* def "Should not create account if passwords do not match, like #validSignupDataExceptUnmatchingPass.password and #validSignupDataExceptUnmatchingPass.confirmPassword"() {
 
-        given: "I am at Create Account page"
+         given: "I am at Create Account page"
+         to CreateAccountPage
+
+         when: "I fill the displayed form with valid data except passwords wich do not match"
+         fillFormWithData validSignupDataExceptUnmatchingPass
+
+         and: "I click on button saying Sign Up"
+         signupForm.submitButton.click()
+
+         then: "I see an error message under password input"
+         assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
+
+         where:
+         validSignupDataExceptUnmatchingPass << [
+                 Classes.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
+                 Classes.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
+                 Classes.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
+         ]
+     }*/
+
+    def "Should not create account when not agreeing terms and conditions"() {
+        given: "I am at Create Account Page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data except passwords wich do not match"
-        fillFormWithData validSignupDataExceptUnmatchingPass
+        when: "I fill the displayed form with valid data"
+        fillFormWithData sharedValidSignupData
+
+        and: "I do not agree with terms and conditions" //for information purposes here and in reports
+        true
 
         and: "I click on button saying Sign Up"
         signupForm.submitButton.click()
 
-        then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
-
-        where:
-        validSignupDataExceptUnmatchingPass << [
-                Classes.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
-                Classes.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
-                Classes.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
-        ]
+        then: "I am at Home Page"
+        assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
     }
 }
 
