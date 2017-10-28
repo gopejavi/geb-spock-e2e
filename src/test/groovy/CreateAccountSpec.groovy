@@ -185,7 +185,7 @@ class CreateAccountSpec extends GebReportingSpec {
         where:
         validSignupDataWithExistingMail << [
                 Objects.createDataFrom(sharedValidSignupData, [email: "gopejavi@mailinator.com"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com.com"])
+                Objects.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com"])
         ]
     }
 }
