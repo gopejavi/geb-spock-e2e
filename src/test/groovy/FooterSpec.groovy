@@ -1,7 +1,4 @@
-import Pages.AboutPage
-import Pages.HomePage
-import Pages.PrivacyPolicyPage
-import Pages.TermsPage
+import Pages.*
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -24,7 +21,7 @@ class FooterSpec extends GebReportingSpec {
     @Shared
             expectedTermsLinkText = "Terms"
 
-    def "I have a header in Home page"() {
+    def "Should have a header in Home page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -39,7 +36,7 @@ class FooterSpec extends GebReportingSpec {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "I have a header in About page"() {
+    def "Should have a header in About page"() {
         given: "I am at About page"
         to AboutPage
 
@@ -54,7 +51,7 @@ class FooterSpec extends GebReportingSpec {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "I have a header in Privacy Policy page"() {
+    def "Should have a header in Privacy Policy page"() {
         given: "I am at Privacy Policy page"
         to PrivacyPolicyPage
 
@@ -69,7 +66,7 @@ class FooterSpec extends GebReportingSpec {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "I have a header in Terms page"() {
+    def "Should have a header in Terms page"() {
         given: "I am at Terms page"
         to TermsPage
 
@@ -84,8 +81,23 @@ class FooterSpec extends GebReportingSpec {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
+    def "Should have a header in Create Account page"() {
+        given: "I am at Create Account page"
+        to CreateAccountPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a footer containing message #expectedMessage"
+        assert footer.text().contains(expectedLovelyMessage)
+
+        and: "links to Privacy Policy page, Terms page"
+        assert footer.privacyLink.text() == expectedPrivacyLinkText
+        assert footer.termsLink.text() == expectedTermsLinkText
+    }
+
     //Extra, not in Acceptance Criteria
-    def "Privacy Policy link navigates to Privacy Policy page"() {
+    def "Privacy Policy link should navigate to Privacy Policy page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -97,7 +109,7 @@ class FooterSpec extends GebReportingSpec {
     }
 
     //Extra
-    def "Privacy Policy link navigates to Terms page"() {
+    def "Terms link should navigate to Terms page"() {
         given: "I am at Home page"
         to HomePage
 

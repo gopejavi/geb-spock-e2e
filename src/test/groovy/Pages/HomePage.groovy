@@ -20,6 +20,8 @@ class HomePage extends Page {
         mainTitle { $("h1") }
         mainSubtitle { $("#subtitle") }
 
+        createAccountButton { $("#overview .btn", href: "/session/signup") }
+
         //parametrized module example
         pageSection { indexValue -> module new PageSectionModule(index: indexValue) }
         awesomeSection { pageSection("1") }

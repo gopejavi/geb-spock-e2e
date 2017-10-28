@@ -13,7 +13,7 @@ So that I know what's for
 @Issue("https://trello.com/c/rzlnz5FX")
 class HomePageInformationSpec extends GebReportingSpec {
 
-    def "Correct subtitle"() {
+    def "Should see a particular subtitle"() {
         given: "I am at Home page"
         to HomePage
 
@@ -27,15 +27,14 @@ class HomePageInformationSpec extends GebReportingSpec {
         expectedSubtitleText = "This is a website secured by Phalcon Framework"
     }
 
-    def "Correct informative section one called Awesome Section"() {
-
+    def "Should see correct informative section one called #expectedSectionTitle containing #expectedSectionContent"() {
         given: "I am at Home page"
         to HomePage
 
         when: "I do nothing"
         true
 
-        then: "I see section with title #expectedSectionTitle"
+        then: "I see correct section title"
         assert awesomeSection.title.text() == expectedSectionTitle
 
         and: "I see some Lorem Ipsum content"
@@ -49,15 +48,14 @@ class HomePageInformationSpec extends GebReportingSpec {
         "Awesome Section"    | "Cum sociis natoque penatibus"
     }
 
-    def "Correct informative section two called Important Stuff"() {
-
+    def "Should see correct informative section two called #expectedSectionTitle containing #expectedSectionContent"() {
         given: "I am at Home page"
         to HomePage
 
         when: "I do nothing"
         true
 
-        then: "I see section with title #expectedSectionTitle"
+        then: "I see correct section title"
         assert importantStuff.title.text() == expectedSectionTitle
 
         and: "I see some Lorem Ipsum content"
@@ -68,15 +66,14 @@ class HomePageInformationSpec extends GebReportingSpec {
         "Important Stuff"    | "Cum sociis natoque penatibus"
     }
 
-    def "Correct informative section three called Example Addresses"() {
-
+    def "Should see correct informative section three called #expectedSectionTitle containing several address info"() {
         given: "I am at Home page"
         to HomePage
 
         when: "I do nothing"
         true
 
-        then: "I see section with title #expectedAddressesSectionTitle"
+        then: "I see correct section title"
         assert exampleAddresses.title.text() == expectedAddressesSectionTitle
 
         and: "I see the correct first subsection title with #expectedOfficeAddressTitle"

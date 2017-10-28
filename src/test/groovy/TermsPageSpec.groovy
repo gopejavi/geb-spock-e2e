@@ -13,7 +13,7 @@ So that I know some rules for using this site
 @Issue("https://trello.com/c/eobcRpAi")
 class TermsPageSpec extends GebReportingSpec {
 
-    def "Terms page has particular information"() {
+    def "Should see particular info in Terms page"() {
         given: "I am at Terms Page"
         to TermsPage
 
