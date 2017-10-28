@@ -17,7 +17,7 @@ So I access to exclusive features""")
 class CreateAccountSpec extends GebReportingSpec {
 
     @Shared
-    SignupData validSharedSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
+    SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
 
     def "Navigation to Create Account Page"() {
         given: "I am at Home page"
@@ -55,7 +55,7 @@ class CreateAccountSpec extends GebReportingSpec {
 
          where:
          validSignupData << [
-                 validSharedSignupData,
+                 sharedValidSignupData,
                  new SignupData("DOGE", "muchemail@mailinator.com", "soPasswordVerySecretWOW", "soPasswordVerySecretWOW"),
                  new SignupData("E", "eve@mailinator.com", "eveveveve", "eveveveve"),
                  new SignupData(" _some_!·%&/()\"\$WeirdCharsAreAllowedTooAndAlsoLongNamesWOW", "incrediblyLongAndStupidEmailForTheLol@mailinator.com", "superSecret", "superSecret"),
@@ -99,13 +99,13 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptEmail << [
-                Classes.createDataFrom(validSharedSignupData, [email: "thisIsNotValidMail"]),
-                Classes.createDataFrom(validSharedSignupData, [email: "thisIsNotValidNeither.com"]),
-                Classes.createDataFrom(validSharedSignupData, [email: "whoCares@aboutDomains"]),
-                Classes.createDataFrom(validSharedSignupData, [email: "asd!)/(/&)]@what.lol"]),
-                Classes.createDataFrom(validSharedSignupData, [email: "email with spaces@omg.com"])
+                Classes.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidMail"]),
+                Classes.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidNeither.com"]),
+                Classes.createDataFrom(sharedValidSignupData, [email: "whoCares@aboutDomains"]),
+                Classes.createDataFrom(sharedValidSignupData, [email: "asd!)/(/&)]@what.lol"]),
+                Classes.createDataFrom(sharedValidSignupData, [email: "email with spaces@omg.com"])
         ]
-    }*/
+    }
 
     def "Should not create account if password is invalid -less than 8 chars-, like #validSignupDataExceptPassword"() {
 
@@ -123,9 +123,31 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptPassword << [
-                Classes.createDataFrom(validSharedSignupData, [password: "1234567", confirmPassword: "1234567"]),
-                Classes.createDataFrom(validSharedSignupData, [password: "shortP", confirmPassword: "shortP"]),
-                Classes.createDataFrom(validSharedSignupData, [password: ")", confirmPassword: ")"]),
+                Classes.createDataFrom(sharedValidSignupData, [password: "1234567", confirmPassword: "1234567"]),
+                Classes.createDataFrom(sharedValidSignupData, [password: "shortP", confirmPassword: "shortP"]),
+                Classes.createDataFrom(sharedValidSignupData, [password: ")", confirmPassword: ")"])
+        ]
+    }*/
+
+    def "Should not create account if passwords do not match, like #validSignupDataExceptUnmatchingPass.password and #validSignupDataExceptUnmatchingPass.confirmPassword"() {
+
+        given: "I am at Create Account page"
+        to CreateAccountPage
+
+        when: "I fill the displayed form with valid data except passwords wich do not match"
+        fillFormWithData validSignupDataExceptUnmatchingPass
+
+        and: "I click on button saying Sign Up"
+        signupForm.submitButton.click()
+
+        then: "I see an error message under password input"
+        assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
+
+        where:
+        validSignupDataExceptUnmatchingPass << [
+                Classes.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
+                Classes.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
+                Classes.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
         ]
     }
 }
