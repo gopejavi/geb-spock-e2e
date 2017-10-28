@@ -2,7 +2,6 @@ import Classes.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
 import Utils.Classes
-import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -19,7 +18,7 @@ class CreateAccountSpec extends GebReportingSpec {
 
     @Shared
     SignupData validSharedSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
-    
+
     def "Navigation to Create Account Page"() {
         given: "I am at Home page"
         to HomePage
@@ -82,7 +81,7 @@ class CreateAccountSpec extends GebReportingSpec {
         emailRequiredError = "The e-mail is required"
         passwordRequiredError = "The password is required"
         confirmPasswordRequiredError = "The confirmation password is required"
-    }*/
+    }
 
     def "Can not create account if email is invalid, like #validSignupDataExceptEmail"() {
 
@@ -98,9 +97,6 @@ class CreateAccountSpec extends GebReportingSpec {
         then: "I see an error message under email input"
         assert signupForm.emailInputErrors.text() == "The e-mail is not valid"
 
-        cleanup:
-        VokuroDatabase.restoreOriginal()
-
         where:
         validSignupDataExceptEmail << [
                 Classes.createDataFrom(validSharedSignupData, [email: "thisIsNotValidMail"]),
@@ -108,6 +104,28 @@ class CreateAccountSpec extends GebReportingSpec {
                 Classes.createDataFrom(validSharedSignupData, [email: "whoCares@aboutDomains"]),
                 Classes.createDataFrom(validSharedSignupData, [email: "asd!)/(/&)]@what.lol"]),
                 Classes.createDataFrom(validSharedSignupData, [email: "email with spaces@omg.com"])
+        ]
+    }*/
+
+    def "Should not create account if password is invalid -less than 8 chars-, like #validSignupDataExceptPassword"() {
+
+        given: "I am at Create Account page"
+        to CreateAccountPage
+
+        when: "I fill the displayed form with valid data except password wich is invalid"
+        fillFormWithData validSignupDataExceptPassword
+
+        and: "I click on button saying Sign Up"
+        signupForm.submitButton.click()
+
+        then: "I see an error message under password input"
+        assert signupForm.passwordInputErrors.text() == "Password is too short. Minimum 8 characters"
+
+        where:
+        validSignupDataExceptPassword << [
+                Classes.createDataFrom(validSharedSignupData, [password: "1234567", confirmPassword: "1234567"]),
+                Classes.createDataFrom(validSharedSignupData, [password: "shortP", confirmPassword: "shortP"]),
+                Classes.createDataFrom(validSharedSignupData, [password: ")", confirmPassword: ")"]),
         ]
     }
 }
