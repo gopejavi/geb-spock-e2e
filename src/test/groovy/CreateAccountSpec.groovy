@@ -163,7 +163,7 @@ class CreateAccountSpec extends GebReportingSpec {
         and: "I click on button saying Sign Up"
         signupForm.submitButton.click()
 
-        then: "I am at Home Page"
+        then: "I see an error message under terms agreement checkbox"
         assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
     }
 }
