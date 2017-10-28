@@ -1,6 +1,6 @@
 package Utils
 
-class Classes {
+class Objects {
 
     static createDataFrom(Object object, Map overrides = [:]) {
         def copiedObject = object.clone()

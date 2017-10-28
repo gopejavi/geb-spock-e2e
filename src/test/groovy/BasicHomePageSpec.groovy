@@ -13,7 +13,7 @@ So that I can start using this web
 @Issue("https://trello.com/c/x9lV0DqC")
 class BasicHomePageSpec extends GebReportingSpec {
 
-    def "Can get to the Home page"() {
+    def "Home page should exist"() {
         given: "I go to Home page"
         to HomePage
 

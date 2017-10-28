@@ -1,4 +1,4 @@
-package Classes
+package DataObjects
 
 import groovy.transform.AutoClone
 import groovy.transform.TupleConstructor

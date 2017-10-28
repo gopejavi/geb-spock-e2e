@@ -17,6 +17,7 @@ class CreateAccountPage extends Page {
     static content = {
         header { module HeaderModule }
         mainPanelTitle { $("h2") }
+        generalErrors { $(".main-container").$(".alert") }
         signupForm { module SignupModule }
         footer { module FooterModule }
     }

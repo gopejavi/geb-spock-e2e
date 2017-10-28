@@ -13,7 +13,7 @@ So that I know what will happen with my data
 @Issue("https://trello.com/c/vST56CrY")
 class PrivacyPolicyPageSpec extends GebReportingSpec {
 
-    def "Privacy Policy page has particular information"() {
+    def "Should see particular info in Privacy Policy page"() {
         given: "I am at Privacy Policy page"
         to PrivacyPolicyPage
 

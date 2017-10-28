@@ -1,7 +1,4 @@
-import Pages.AboutPage
-import Pages.HomePage
-import Pages.PrivacyPolicyPage
-import Pages.TermsPage
+import Pages.*
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -14,7 +11,7 @@ As an Internet surfer
 I want a header in public pages
 So that I can navigate easily to all pages
 """)
-@Issue("https://trello.com/c/87HqKCDP")
+@Issue("https://trello.com/c/87HqKCDP, https://trello.com/c/IlZMPbcA")
 class HeaderSpec extends GebReportingSpec {
 
     @Shared
@@ -24,7 +21,7 @@ class HeaderSpec extends GebReportingSpec {
     @Shared
             expectedAboutLinkText = "About"
 
-    def "I have a header in Home page"() {
+    def "Should have a header in Home page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -41,7 +38,7 @@ class HeaderSpec extends GebReportingSpec {
         assert header.aboutLink.text() == expectedAboutLinkText
     }
 
-    def "I have a header in About page"() {
+    def "Should have a header in About page"() {
         given: "I am at About page"
         to AboutPage
 
@@ -56,7 +53,7 @@ class HeaderSpec extends GebReportingSpec {
         assert header.aboutLink.text() == expectedAboutLinkText
     }
 
-    def "I have a header in Privacy Policy page"() {
+    def "Should have a header in Privacy Policy page"() {
         given: "I am at Privacy Policy page"
         to PrivacyPolicyPage
 
@@ -71,7 +68,7 @@ class HeaderSpec extends GebReportingSpec {
         assert header.aboutLink.text() == expectedAboutLinkText
     }
 
-    def "I have a header in Terms page"() {
+    def "Should have a header in Terms page"() {
         given: "I am at Terms page"
         to TermsPage
 
@@ -86,8 +83,23 @@ class HeaderSpec extends GebReportingSpec {
         assert header.aboutLink.text() == expectedAboutLinkText
     }
 
+    def "Should have a header in Create Account page"() {
+        given: "I am at Create Account page"
+        to CreateAccountPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a red header with Vokuro logo"
+        assert header.brand.text() == expectedVokuroBrandText
+
+        and: "links to Home page, About page"
+        assert header.homeLink.text() == expectedHomeLinkText
+        assert header.aboutLink.text() == expectedAboutLinkText
+    }
+
     //We decide to perform an extra test to check that links actually work
-    def "About link navigates to About page"() {
+    def "About link should navigate to About page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -98,11 +110,11 @@ class HeaderSpec extends GebReportingSpec {
         at AboutPage
     }
 
-    def "Home link navigates to Home page"() {
+    def "Home link should navigate to Home page"() {
         given: "I am at About page"
         to AboutPage
 
-        when: "I click on About link"
+        when: "I click on Home link"
         header.homeLink.click()
 
         then: "I am at About page"

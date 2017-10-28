@@ -1,6 +1,8 @@
-import Classes.SignupData
+import DataObjects.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
+import Utils.Objects
+import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -18,7 +20,7 @@ class CreateAccountSpec extends GebReportingSpec {
     @Shared
     SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
 
-    def "Navigation to Create Account Page"() {
+    def "Should navigate to Create Account Page from Home Page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -30,39 +32,39 @@ class CreateAccountSpec extends GebReportingSpec {
     }
 
     //More complex example with multiple checks with data defined in "Where"
-    /* def "Can Create account with fields: name #validSignupData.name, e-mail #validSignupData.email, password #validSignupData.password"() {
-         given: "I am at Create Account Page"
-         to CreateAccountPage
+    def "Should create account with fields: name #validSignupData.name, e-mail #validSignupData.email, password #validSignupData.password"() {
+        given: "I am at Create Account Page"
+        to CreateAccountPage
 
-         when: "I fill the displayed form with valid data"
-         fillFormWithData validSignupData
+        when: "I fill the displayed form with valid data"
+        fillFormWithData validSignupData
 
-         and: "I click the check to agree the terms and conditions"
-         signupForm.termsCheckbox.click()
+        and: "I click the check to agree the terms and conditions"
+        signupForm.termsCheckbox.click()
 
-         and: "I click on button saying Sign Up"
-         signupForm.submitButton.click()
+        and: "I click on button saying Sign Up"
+        signupForm.submitButton.click()
 
-         then: "I am at Home Page"
-         at HomePage
+        then: "I am at Home Page"
+        at HomePage
 
-         and: "I receive an email confirming the account creation"
-         true //Note: not implemented as app doesn't send emails.
+        and: "I receive an email confirming the account creation"
+        true //Note: not implemented as app doesn't send emails.
 
-         cleanup:
-         VokuroDatabase.restoreOriginal()
+        cleanup:
+        VokuroDatabase.restoreOriginal()
 
-         where:
-         validSignupData << [
-                 sharedValidSignupData,
-                 new SignupData("DOGE", "muchemail@mailinator.com", "soPasswordVerySecretWOW", "soPasswordVerySecretWOW"),
-                 new SignupData("E", "eve@mailinator.com", "eveveveve", "eveveveve"),
-                 new SignupData(" _some_!·%&/()\"\$WeirdCharsAreAllowedTooAndAlsoLongNamesWOW", "incrediblyLongAndStupidEmailForTheLol@mailinator.com", "superSecret", "superSecret"),
-                 new SignupData("Neil DeGrasse", "masterUniverse@mailinator.com", "IamTheGreatMasterOfTheUniverseAndYouKnowIt", "IamTheGreatMasterOfTheUniverseAndYouKnowIt")
-         ]
-     }*/
+        where:
+        validSignupData << [
+                sharedValidSignupData,
+                new SignupData("DOGE", "muchemail@mailinator.com", "soPasswordVerySecretWOW", "soPasswordVerySecretWOW"),
+                new SignupData("E", "eve@mailinator.com", "eveveveve", "eveveveve"),
+                new SignupData(" _some_!·%&/()\"\$WeirdCharsAreAllowedTooAndAlsoLongNamesWOW", "incrediblyLongAndStupidEmailForTheLol@mailinator.com", "superSecret", "superSecret"),
+                new SignupData("Neil DeGrasse", "masterUniverse@mailinator.com", "IamTheGreatMasterOfTheUniverseAndYouKnowIt", "IamTheGreatMasterOfTheUniverseAndYouKnowIt")
+        ]
+    }
 
-    /*def "Can not create account withouth required data"() {
+    def "Should not create account withouth required data"() {
         given: "I am at Create Account page"
         to CreateAccountPage
 
@@ -82,8 +84,7 @@ class CreateAccountSpec extends GebReportingSpec {
         confirmPasswordRequiredError = "The confirmation password is required"
     }
 
-    def "Can not create account if email is invalid, like #validSignupDataExceptEmail"() {
-
+    def "Should not create account if email is invalid, like #validSignupDataExceptEmail.email"() {
         given: "I am at Create Account page"
         to CreateAccountPage
 
@@ -98,16 +99,15 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptEmail << [
-                Classes.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidMail"]),
-                Classes.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidNeither.com"]),
-                Classes.createDataFrom(sharedValidSignupData, [email: "whoCares@aboutDomains"]),
-                Classes.createDataFrom(sharedValidSignupData, [email: "asd!)/(/&)]@what.lol"]),
-                Classes.createDataFrom(sharedValidSignupData, [email: "email with spaces@omg.com"])
+                Objects.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidMail"]),
+                Objects.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidNeither.com"]),
+                Objects.createDataFrom(sharedValidSignupData, [email: "whoCares@aboutDomains"]),
+                Objects.createDataFrom(sharedValidSignupData, [email: "asd!)/(/&)]@what.lol"]),
+                Objects.createDataFrom(sharedValidSignupData, [email: "email with spaces@omg.com"])
         ]
     }
 
     def "Should not create account if password is invalid -less than 8 chars-, like #validSignupDataExceptPassword"() {
-
         given: "I am at Create Account page"
         to CreateAccountPage
 
@@ -122,33 +122,32 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptPassword << [
-                Classes.createDataFrom(sharedValidSignupData, [password: "1234567", confirmPassword: "1234567"]),
-                Classes.createDataFrom(sharedValidSignupData, [password: "shortP", confirmPassword: "shortP"]),
-                Classes.createDataFrom(sharedValidSignupData, [password: ")", confirmPassword: ")"])
+                Objects.createDataFrom(sharedValidSignupData, [password: "1234567", confirmPassword: "1234567"]),
+                Objects.createDataFrom(sharedValidSignupData, [password: "shortP", confirmPassword: "shortP"]),
+                Objects.createDataFrom(sharedValidSignupData, [password: ")", confirmPassword: ")"])
         ]
-    }*/
+    }
 
-    /* def "Should not create account if passwords do not match, like #validSignupDataExceptUnmatchingPass.password and #validSignupDataExceptUnmatchingPass.confirmPassword"() {
+    def "Should not create account if passwords do not match, like #validSignupDataExceptUnmatchingPass.password and #validSignupDataExceptUnmatchingPass.confirmPassword"() {
+        given: "I am at Create Account page"
+        to CreateAccountPage
 
-         given: "I am at Create Account page"
-         to CreateAccountPage
+        when: "I fill the displayed form with valid data except passwords wich do not match"
+        fillFormWithData validSignupDataExceptUnmatchingPass
 
-         when: "I fill the displayed form with valid data except passwords wich do not match"
-         fillFormWithData validSignupDataExceptUnmatchingPass
+        and: "I click on button saying Sign Up"
+        signupForm.submitButton.click()
 
-         and: "I click on button saying Sign Up"
-         signupForm.submitButton.click()
+        then: "I see an error message under password input"
+        assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
 
-         then: "I see an error message under password input"
-         assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
-
-         where:
-         validSignupDataExceptUnmatchingPass << [
-                 Classes.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
-                 Classes.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
-                 Classes.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
-         ]
-     }*/
+        where:
+        validSignupDataExceptUnmatchingPass << [
+                Objects.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
+                Objects.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
+                Objects.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
+        ]
+    }
 
     def "Should not create account when not agreeing terms and conditions"() {
         given: "I am at Create Account Page"
@@ -166,10 +165,27 @@ class CreateAccountSpec extends GebReportingSpec {
         then: "I see an error message under terms agreement checkbox"
         assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
     }
+
+    def "Should not create account if user already exists, like #validSignupDataWithExistingMail.email"() {
+        given: "I am at Create Account Page"
+        to CreateAccountPage
+
+        when: "I fill the displayed form with valid data, the email already registered"
+        fillFormWithData validSignupDataWithExistingMail
+
+        and: "I click the check to agree the terms and conditions"
+        signupForm.termsCheckbox.click()
+
+        and: "I click on button saying Sign Up"
+        signupForm.submitButton.click()
+
+        then: "I see error message below the header"
+        assert generalErrors.text() == "The email is already registered"
+
+        where:
+        validSignupDataWithExistingMail << [
+                Objects.createDataFrom(sharedValidSignupData, [email: "gopejavi@mailinator.com"]),
+                Objects.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com.com"])
+        ]
+    }
 }
-
-
-
-
-
-

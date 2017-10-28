@@ -13,7 +13,7 @@ So that I know more about this web
 @Issue("https://trello.com/c/7PIVUNaw")
 class AboutPageSpec extends GebReportingSpec {
 
-    def "Can browse to the About page"() {
+    def "About page should exist"() {
         given: "I am at About page"
         to AboutPage
 
@@ -24,7 +24,7 @@ class AboutPageSpec extends GebReportingSpec {
         at AboutPage
     }
 
-    def "About page has particular information"() {
+    def "Should see particular info in About page"() {
         given: "I am at About page"
         to AboutPage
 
