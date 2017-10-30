@@ -1,6 +1,9 @@
 import DataObjects.LoginData
+import Pages.HomePage
 import Pages.LoginPage
+import Pages.UsersPage
 import Utils.DataObjectsHelper
+import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -18,7 +21,7 @@ class LoginSpec extends GebReportingSpec {
 
     @Shared
     LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
-/*
+
     def "Should navigate to Login Page from Home Page"() {
         given: "I am at Home page"
         to HomePage
@@ -43,7 +46,6 @@ class LoginSpec extends GebReportingSpec {
         cleanup: //because even if no creating new objects, a login count could be stored, changing initial conditions to other tests
         VokuroDatabase.restoreOriginal()
     }
-*/
 
     def "Should not log in without email"() {
         given: "I am at Log In page"
@@ -59,19 +61,15 @@ class LoginSpec extends GebReportingSpec {
         emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
     }
 
-/*
-    def "Should not log In if email is invalid, like #validLoginDataExceptEmail.email"() {
+    def "Should not login if email is invalid, like #validLoginDataExceptEmail.email"() {
         given: "I am at Log In page"
-        to LogInPage
+        to LoginPage
 
         when: "I fill the displayed form with valid data except email wich is invalid"
-        fillFormWithData validLoginDataExceptEmail
+        login(validLoginDataExceptEmail)
 
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
-
-        then: "I see an error message under email input"
-        assert signupForm.emailInputErrors.text() == "The e-mail is not valid"
+        then: "I see an error message under below the header"
+        assert generalErrors*.text().any { it == "The e-mail is not valid" }
 
         where:
         validLoginDataExceptEmail << [
@@ -83,87 +81,36 @@ class LoginSpec extends GebReportingSpec {
         ]
     }
 
-    def "Should not log In if password is invalid -less than 8 chars-, like #validLoginDataExceptPassword"() {
+    def "I should not be able to log in without password"() {
         given: "I am at Log In page"
-        to LogInPage
+        to LoginPage
 
-        when: "I fill the displayed form with valid data except password wich is invalid"
-        fillFormWithData validLoginDataExceptPassword
+        when: "I log in valid data except password wich is blank"
+        login(validLoginDataExceptPassword)
 
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
-
-        then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == "Password is too short. Minimum 8 characters"
+        then: "I see an error message below the header"
+        assert generalErrors*.text().any { it == "The password is required" }
 
         where:
-        validLoginDataExceptPassword << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: "1234567", confirmPassword: "1234567"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: "shortP", confirmPassword: "shortP"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ")", confirmPassword: ")"])
-        ]
+        validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
     }
 
-    def "Should not log In if passwords do not match, like #validLoginDataExceptUnmatchingPass.password and #validLoginDataExceptUnmatchingPass.confirmPassword"() {
+    def "Should not log in with bad email-password combination, like #badMailPassCombo.email and #badMailPassCombo.password"() {
         given: "I am at Log In page"
-        to LogInPage
+        to LoginPage
 
-        when: "I fill the displayed form with valid data except passwords wich do not match"
-        fillFormWithData validLoginDataExceptUnmatchingPass
+        when: "I log in with a not existent email-password combination"
+        login(badMailPassCombo)
 
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
-
-        then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
+        then: "I see an error message below the header"
+        assert generalErrors*.text().any { it == "Wrong email/password combination" }
 
         where:
-        validLoginDataExceptUnmatchingPass << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: "12345678", confirmPassword: "12345679"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
+        badMailPassCombo << [
+                new LoginData("gopejavi@mailinator.com", "12345679"),
+                new LoginData("notInDB@mailinator.com", "superSecret!!!"),
+                new LoginData("fully@inventedEmail.lol", "alsoVeryInvented!"),
+                new LoginData("veronica@phalconphp.com", "superSecret!!!") //both exist in DB (don't match)
         ]
     }
-
-    def "Should not log In when not agreeing terms and conditions"() {
-        given: "I am at Log In Page"
-        to LogInPage
-
-        when: "I fill the displayed form with valid data"
-        fillFormWithData sharedValidLoginData
-
-        and: "I do not agree with terms and conditions" //for information purposes here and in reports
-        true
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
-
-        then: "I see an error message under terms agreement checkbox"
-        assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
-    }
-
-    def "Should not log In if user already exists, like #validLoginDataWithExistingMail.email"() {
-        given: "I am at Log In Page"
-        to LogInPage
-
-        when: "I fill the displayed form with valid data, the email already registered"
-        fillFormWithData validLoginDataWithExistingMail
-
-        and: "I click the check to agree the terms and conditions"
-        signupForm.termsCheckbox.click()
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
-
-        then: "I see error message below the header"
-        assert generalErrors.text() == "The email is already registered"
-
-        where:
-        validLoginDataWithExistingMail << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "gopejavi@mailinator.com"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "veronica@phalconphp.com"])
-        ]
-    }
-
-    */
 }
