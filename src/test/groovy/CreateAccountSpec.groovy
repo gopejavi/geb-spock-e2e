@@ -1,7 +1,7 @@
 import DataObjects.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
-import Utils.Objects
+import Utils.DataObjectsHelper
 import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
@@ -65,7 +65,7 @@ class CreateAccountSpec extends GebReportingSpec {
         ]
     }
 
-    def "Should not create account withouth required data"() {
+    def "Should not create account without required data"() {
         given: "I am at Create Account page"
         to CreateAccountPage
 
@@ -100,11 +100,11 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptEmail << [
-                Objects.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidMail"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidNeither.com"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "whoCares@aboutDomains"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "asd!)/(/&)]@what.lol"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "email with spaces@omg.com"])
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidMail"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "thisIsNotValidNeither.com"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "whoCares@aboutDomains"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "asd!)/(/&)]@what.lol"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "email with spaces@omg.com"])
         ]
     }
 
@@ -123,9 +123,9 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptPassword << [
-                Objects.createDataFrom(sharedValidSignupData, [password: "1234567", confirmPassword: "1234567"]),
-                Objects.createDataFrom(sharedValidSignupData, [password: "shortP", confirmPassword: "shortP"]),
-                Objects.createDataFrom(sharedValidSignupData, [password: ")", confirmPassword: ")"])
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: "1234567", confirmPassword: "1234567"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: "shortP", confirmPassword: "shortP"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: ")", confirmPassword: ")"])
         ]
     }
 
@@ -144,9 +144,9 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataExceptUnmatchingPass << [
-                Objects.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
-                Objects.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
-                Objects.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: "12345678", confirmPassword: "12345679"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: "SomeLongPass!!", confirmPassword: "SomeLongerPass!!"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [password: "=)(=)(=)(", confirmPassword: "()=()=()="])
         ]
     }
 
@@ -185,8 +185,8 @@ class CreateAccountSpec extends GebReportingSpec {
 
         where:
         validSignupDataWithExistingMail << [
-                Objects.createDataFrom(sharedValidSignupData, [email: "gopejavi@mailinator.com"]),
-                Objects.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com"])
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "gopejavi@mailinator.com"]),
+                DataObjectsHelper.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com"])
         ]
     }
 }

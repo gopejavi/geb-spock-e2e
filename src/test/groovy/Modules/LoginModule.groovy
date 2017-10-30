@@ -15,6 +15,7 @@ class LoginModule extends Module {
 
     def login(def loginData) {
         emailInput = loginData.email
-        passwordInput = loginData.passwordS
+        passwordInput = loginData.password
+        goButton.click()
     }
 }
