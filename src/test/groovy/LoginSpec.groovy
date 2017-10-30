@@ -1,37 +1,35 @@
-import DataObjects.SignupData
-import Pages.CreateAccountPage
+import DataObjects.LoginData
 import Pages.HomePage
-import Utils.Objects
-import Utils.VokuroDatabase
+import Pages.LoginPage
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
 import spock.lang.Title
 
-@Title("US8: Create Account")
+@Title("US9: Log in")
 @Narrative("""
-As an interested user
-I want to create an account
-So I access to exclusive features
+As registered user
+I want to log in
+So I can access more features
 """)
-@Issue("https://trello.com/c/IlZMPbcA")
-class CreateAccountSpec extends GebReportingSpec {
+@Issue("https://trello.com/c/plRCzj6C")
+class LoginSpec extends GebReportingSpec {
 
     @Shared
-    SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
+    LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
 
-    def "Should navigate to Create Account Page from Home Page"() {
+    def "Should navigate to Login Page from Home Page"() {
         given: "I am at Home page"
         to HomePage
 
-        when: "I click on a button saying Create an Account"
-        createAccountButton.click()
+        when: "I click on Login at header"
+        header.loginLink.click()
 
-        then: "I am at Create Account Page"
-        at CreateAccountPage
+        then: "I am at Login Page"
+        at LoginPage
     }
-
+/*
     //More complex example with multiple checks with data defined in "Where"
     def "Should create account with fields: name #validSignupData.name, e-mail #validSignupData.email, password #validSignupData.password"() {
         given: "I am at Create Account Page"
@@ -188,5 +186,5 @@ class CreateAccountSpec extends GebReportingSpec {
                 Objects.createDataFrom(sharedValidSignupData, [email: "gopejavi@mailinator.com"]),
                 Objects.createDataFrom(sharedValidSignupData, [email: "veronica@phalconphp.com"])
         ]
-    }
+    }*/
 }
