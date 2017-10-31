@@ -64,7 +64,7 @@ class CreateAccountSpec extends GebReportingSpec {
         to CreateAccountPage
 
         when: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        signupForm.signupButton.click()
 
         then: "I see error messages under each form input"
         assert signupForm.nameInputErrors.text() == nameRequiredError
