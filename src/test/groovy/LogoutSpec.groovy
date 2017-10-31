@@ -21,9 +21,19 @@ class LogoutSpec extends GebReportingSpec {
     LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
 
     def setup() {
-        println "setup!"
         to LoginPage
         login(sharedValidLoginData)
+    }
+
+    def "Header should have a log out link when logged in"() {
+        given: "I am at Users page"
+        to UsersPage
+
+        when: "I do nothing"
+        true
+
+        then: "I see a Logout link in header"
+        assert headerLogged.logoutLink.text() == "Logout"
     }
 
     def "Registered user should log out when clicking on log out link, not being able to go to private pages"() {
