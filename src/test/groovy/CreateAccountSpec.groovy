@@ -19,7 +19,7 @@ So I access to exclusive features
 class CreateAccountSpec extends GebReportingSpec {
 
     @Shared
-    SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret")
+    SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret", true)
 
     def "Should navigate to Create Account Page from Home Page"() {
         given: "I am at Home page"
@@ -37,14 +37,8 @@ class CreateAccountSpec extends GebReportingSpec {
         given: "I am at Create Account Page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data"
-        fillFormWithData validSignupData
-
-        and: "I click the check to agree the terms and conditions"
-        signupForm.termsCheckbox.click()
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data"
+        signup(validSignupData)
 
         then: "I am at Home Page"
         at HomePage
@@ -58,10 +52,10 @@ class CreateAccountSpec extends GebReportingSpec {
         where:
         validSignupData << [
                 sharedValidSignupData,
-                new SignupData("DOGE", "muchemail@mailinator.com", "soPasswordVerySecretWOW", "soPasswordVerySecretWOW"),
-                new SignupData("E", "eve@mailinator.com", "eveveveve", "eveveveve"),
-                new SignupData(" _some_!·%&/()\"\$WeirdCharsAreAllowedTooAndAlsoLongNamesWOW", "incrediblyLongAndStupidEmailForTheLol@mailinator.com", "superSecret", "superSecret"),
-                new SignupData("Neil DeGrasse", "masterUniverse@mailinator.com", "IamTheGreatMasterOfTheUniverseAndYouKnowIt", "IamTheGreatMasterOfTheUniverseAndYouKnowIt")
+                new SignupData("DOGE", "muchemail@mailinator.com", "soPasswordVerySecretWOW", "soPasswordVerySecretWOW", true),
+                new SignupData("E", "eve@mailinator.com", "eveveveve", "eveveveve", true),
+                new SignupData(" _some_!·%&/()\"\$WeirdCharsAreAllowedTooAndAlsoLongNamesWOW", "incrediblyLongAndStupidEmailForTheLol@mailinator.com", "superSecret", "superSecret", true),
+                new SignupData("Neil DeGrasse", "masterUniverse@mailinator.com", "IamTheGreatMasterOfTheUniverseAndYouKnowIt", "IamTheGreatMasterOfTheUniverseAndYouKnowIt", true)
         ]
     }
 
@@ -70,7 +64,7 @@ class CreateAccountSpec extends GebReportingSpec {
         to CreateAccountPage
 
         when: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        signupForm.signupButton.click()
 
         then: "I see error messages under each form input"
         assert signupForm.nameInputErrors.text() == nameRequiredError
@@ -89,11 +83,8 @@ class CreateAccountSpec extends GebReportingSpec {
         given: "I am at Create Account page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data except email wich is invalid"
-        fillFormWithData validSignupDataExceptEmail
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data except email wich is invalid"
+        signup(validSignupDataExceptEmail)
 
         then: "I see an error message under email input"
         assert signupForm.emailInputErrors.text() == "The e-mail is not valid"
@@ -112,11 +103,8 @@ class CreateAccountSpec extends GebReportingSpec {
         given: "I am at Create Account page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data except password wich is invalid"
-        fillFormWithData validSignupDataExceptPassword
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data except password wich is invalid"
+        signup(validSignupDataExceptPassword)
 
         then: "I see an error message under password input"
         assert signupForm.passwordInputErrors.text() == "Password is too short. Minimum 8 characters"
@@ -133,11 +121,8 @@ class CreateAccountSpec extends GebReportingSpec {
         given: "I am at Create Account page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data except passwords wich do not match"
-        fillFormWithData validSignupDataExceptUnmatchingPass
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data except passwords wich do not match"
+        signup(validSignupDataExceptUnmatchingPass)
 
         then: "I see an error message under password input"
         assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
@@ -154,31 +139,22 @@ class CreateAccountSpec extends GebReportingSpec {
         given: "I am at Create Account Page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data"
-        fillFormWithData sharedValidSignupData
-
-        and: "I do not agree with terms and conditions" //for information purposes here and in reports
-        true
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data but not accepting Terms and Conditions"
+        signup(validSignupDataButDontAgreeTerms)
 
         then: "I see an error message under terms agreement checkbox"
         assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
+
+        where:
+        validSignupDataButDontAgreeTerms = DataObjectsHelper.createDataFrom(sharedValidSignupData, [agreeTermsConditions: false])
     }
 
     def "Should not create account if user already exists, like #validSignupDataWithExistingMail.email"() {
         given: "I am at Create Account Page"
         to CreateAccountPage
 
-        when: "I fill the displayed form with valid data, the email already registered"
-        fillFormWithData validSignupDataWithExistingMail
-
-        and: "I click the check to agree the terms and conditions"
-        signupForm.termsCheckbox.click()
-
-        and: "I click on button saying Sign Up"
-        signupForm.submitButton.click()
+        when: "I sign up with valid data, the email already registered"
+        signup(validSignupDataWithExistingMail)
 
         then: "I see error message below the header"
         assert generalErrors.text() == "The email is already registered"

@@ -16,6 +16,7 @@ class HomePage extends Page {
 
     static content = {
         header { module HeaderModule }
+        generalErrors { $(".main-container").$(".alert") }
 
         mainTitle { $("h1") }
         mainSubtitle { $("#subtitle") }

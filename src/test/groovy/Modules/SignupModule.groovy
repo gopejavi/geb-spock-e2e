@@ -22,13 +22,17 @@ class SignupModule extends Module {
         termsCheckbox { form.$("#terms") }
         termsCheckboxErrors { termsCheckbox.next(".alert-danger") }
 
-        submitButton { form.$("input", type: "submit") }
+        signupButton { form.$(".btn", value: "Sign Up") }
     }
 
-    def fillFormWithData(def signupData) {
+    def signup(def signupData) {
         nameInput = signupData.name
         emailInput = signupData.email
         passwordInput = signupData.password
         confirmPasswordInput = signupData.confirmPassword
+        if (signupData.agreeTermsConditions) {
+            termsCheckbox.click()
+        }
+        signupButton.click()
     }
 }
