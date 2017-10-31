@@ -16,6 +16,7 @@ class TermsPage extends Page {
 
     static content = {
         header { module HeaderModule }
+        generalErrors { $(".main-container").$(".alert") }
         mainPanel { module TitleWithTextModule }
         footer { module FooterModule }
     }

@@ -1,7 +1,7 @@
 package Pages
 
 import Modules.FooterModule
-import Modules.HeaderModule
+import Modules.HeaderLoggedModule
 import geb.Page
 
 class UsersPage extends Page {
@@ -14,10 +14,9 @@ class UsersPage extends Page {
     }
 
     static content = {
-        header { module HeaderModule }
-        mainPanelTitle { $("h2") }
+        headerLogged { module HeaderLoggedModule }
         generalErrors { $(".main-container").$(".alert") }
-
+        mainPanelTitle { $("h2") }
         footer { module FooterModule }
     }
 }
