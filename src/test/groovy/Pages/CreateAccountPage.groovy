@@ -22,7 +22,8 @@ class CreateAccountPage extends Page {
         footer { module FooterModule }
     }
 
-    def fillFormWithData(def signupData) {
-        signupForm.fillFormWithData signupData
+    //encapsulation: Page does not care about how to sign up. SignupModule does.
+    def signup(def signupData) {
+        signupForm.signup(signupData)
     }
 }

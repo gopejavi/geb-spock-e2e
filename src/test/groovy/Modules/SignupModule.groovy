@@ -25,10 +25,14 @@ class SignupModule extends Module {
         submitButton { form.$("input", type: "submit") }
     }
 
-    def fillFormWithData(def signupData) {
+    def signup(def signupData) {
         nameInput = signupData.name
         emailInput = signupData.email
         passwordInput = signupData.password
         confirmPasswordInput = signupData.confirmPassword
+        if (signupData.agreeTermsConditions) {
+            termsCheckbox.click()
+        }
+        submitButton.click()
     }
 }
