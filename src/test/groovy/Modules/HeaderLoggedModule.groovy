@@ -10,6 +10,8 @@ class HeaderLoggedModule extends Module {
 
         homeLink { header.$("a", href: "/index") }
 
+        userDropdown { header.$(".dropdown") }//has con username?
+        changePasswordLink { userDropdown.$("a", href: "/users/changePassword") }
         logoutLink { header.$("a", href: "/session/logout") }
     }
 }
