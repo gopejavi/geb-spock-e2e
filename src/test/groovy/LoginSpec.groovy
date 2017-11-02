@@ -56,7 +56,7 @@ class LoginSpec extends GebReportingSpec {
         login(emptyMailValidPassword)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == Global.EMAIL_REQUIRED }
+        assert alerts.error*.text().any { it == Global.EMAIL_REQUIRED }
 
         where:
         emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
@@ -70,7 +70,7 @@ class LoginSpec extends GebReportingSpec {
         login(validLoginDataExceptEmail)
 
         then: "I see an error message under below the header"
-        assert generalErrors*.text().any { it == Global.EMAIL_NOT_VALID }
+        assert alerts.error*.text().any { it == Global.EMAIL_NOT_VALID }
 
         where:
         validLoginDataExceptEmail << [
@@ -90,7 +90,7 @@ class LoginSpec extends GebReportingSpec {
         login(validLoginDataExceptPassword)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == Global.PASS_REQUIRED }
+        assert alerts.error*.text().any { it == Global.PASS_REQUIRED }
 
         where:
         validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
@@ -104,7 +104,7 @@ class LoginSpec extends GebReportingSpec {
         login(badMailPassCombo)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == Global.WRONG_EMAIL_PASS }
+        assert alerts.error*.text().any { it == Global.WRONG_EMAIL_PASS }
 
         where:
         badMailPassCombo << [

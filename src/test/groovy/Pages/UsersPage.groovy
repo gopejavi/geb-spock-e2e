@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
 import geb.Page
@@ -15,7 +16,7 @@ class UsersPage extends Page {
 
     static content = {
         headerLogged { module HeaderLoggedModule }
-        generalErrors { $(".main-container").$(".alert") }
+        alerts { module AlertsModule }
         mainPanelTitle { $("h2") }
         footer { module FooterModule }
     }

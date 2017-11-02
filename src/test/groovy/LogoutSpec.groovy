@@ -2,6 +2,7 @@ import DataObjects.LoginData
 import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.Global
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -49,7 +50,6 @@ class LogoutSpec extends GebReportingSpec {
 
         then: "I stay at Home page, showing error below the header"
         at HomePage
-        assert generalErrors*.text().any { it == "You don't have access to this module: private" }
-
+        assert alerts.info*.text().any { it == Global.DONT_HAVE_ACCESS }
     }
 }

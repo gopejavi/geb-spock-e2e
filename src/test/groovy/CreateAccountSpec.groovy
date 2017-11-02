@@ -45,7 +45,7 @@ class CreateAccountSpec extends GebReportingSpec {
         at HomePage
 
         and: "I receive an email confirming the account creation"
-        true //Note: not implemented as app doesn't send emails.
+        true //Note: not implemented as email sending is off.
 
         cleanup:
         VokuroDatabase.restoreOriginal()
@@ -152,7 +152,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataWithExistingMail)
 
         then: "I see error message below the header"
-        assert generalErrors.text() == Global.EMAIL_ALREADY_REGISTERED
+        assert alerts.error.text() == Global.EMAIL_ALREADY_REGISTERED
 
         where:
         validSignupDataWithExistingMail << [

@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderModule
 import Modules.SignupModule
@@ -17,7 +18,7 @@ class CreateAccountPage extends Page {
     static content = {
         header { module HeaderModule }
         mainPanelTitle { $("h2") }
-        generalErrors { $(".main-container").$(".alert") }
+        alerts { module AlertsModule }
         signupForm { module SignupModule }
         footer { module FooterModule }
     }

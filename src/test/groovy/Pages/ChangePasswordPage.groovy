@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.AlertsModule
 import Modules.ChangePasswordModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
@@ -17,13 +18,8 @@ class ChangePasswordPage extends Page {
     static content = {
         headerLogged { module HeaderLoggedModule }
         mainPanelTitle { $("h2") }
-
-        alertsAtTop { $(".container").$(".alert") }
-        successAlert { alertsAtTop.filter(".alert-success") }
-        errorAlert { alertsAtTop.filter(".alert-danger") }
-
+        alerts { module AlertsModule }
         changePasswordForm { module ChangePasswordModule }
-
         footer { module FooterModule }
     }
 
