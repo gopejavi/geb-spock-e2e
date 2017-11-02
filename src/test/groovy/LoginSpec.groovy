@@ -2,10 +2,9 @@ import DataObjects.LoginData
 import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.CommonSpecFeatures
 import Utils.DataObjectsHelper
 import Utils.Global
-import Utils.VokuroDatabase
-import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -18,7 +17,7 @@ I want to log in
 So I can access more features
 """)
 @Issue("https://trello.com/c/plRCzj6C")
-class LoginSpec extends GebReportingSpec {
+class LoginSpec extends CommonSpecFeatures {
 
     @Shared
     LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
@@ -43,9 +42,6 @@ class LoginSpec extends GebReportingSpec {
 
         then: "I am at Users Page"
         at UsersPage
-
-        cleanup: //because even if no creating new objects, a login count could be stored, changing initial conditions to other tests
-        VokuroDatabase.restoreOriginal()
     }
 
     def "Should not log in without email"() {

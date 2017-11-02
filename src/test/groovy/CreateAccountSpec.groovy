@@ -1,10 +1,10 @@
 import DataObjects.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
+import Utils.CommonSpecFeatures
 import Utils.DataObjectsHelper
 import Utils.Global
 import Utils.VokuroDatabase
-import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -17,7 +17,7 @@ I want to create an account
 So I access to exclusive features
 """)
 @Issue("https://trello.com/c/IlZMPbcA")
-class CreateAccountSpec extends GebReportingSpec {
+class CreateAccountSpec extends CommonSpecFeatures {
 
     @Shared
     SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret", true)

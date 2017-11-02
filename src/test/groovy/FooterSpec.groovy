@@ -1,5 +1,5 @@
 import Pages.*
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -12,7 +12,7 @@ I want a footer
 So that I can always see a lovely message and links to Policy and Terms pages
 """)
 @Issue("https://trello.com/c/shFUUuDd")
-class FooterSpec extends GebReportingSpec {
+class FooterSpec extends CommonSpecFeatures {
 
     @Shared
             expectedLovelyMessage = "Made with love"

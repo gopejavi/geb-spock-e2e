@@ -2,8 +2,8 @@ import DataObjects.LoginData
 import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.CommonSpecFeatures
 import Utils.Global
-import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -16,7 +16,7 @@ I want to log out the web
 So nobody steal my super-secret info
 """)
 @Issue("https://trello.com/c/S97G1noM")
-class LogoutSpec extends GebReportingSpec {
+class LogoutSpec extends CommonSpecFeatures {
 
     @Shared
     LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
@@ -38,7 +38,6 @@ class LogoutSpec extends GebReportingSpec {
     }
 
     def "Registered user should log out when clicking on log out link, not being able to go to private pages"() {
-
         given: "I am at Users page"
         to UsersPage
 

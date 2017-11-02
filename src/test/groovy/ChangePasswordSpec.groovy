@@ -3,9 +3,8 @@ import DataObjects.LoginData
 import Pages.ChangePasswordPage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.CommonSpecFeatures
 import Utils.Global
-import Utils.VokuroDatabase
-import geb.spock.GebReportingSpec
 import spock.lang.*
 
 @Title("US13: Change Password")
@@ -18,7 +17,7 @@ So my account is safe if password is compromised
 
 //So we don't have to log in for every single scenario by reusing the state of previous:
 @Stepwise
-class ChangePasswordSpec extends GebReportingSpec {
+class ChangePasswordSpec extends CommonSpecFeatures {
 
     @Shared
             validLoginDataWithOldPassword = new LoginData(email: "gopejavi@mailinator.com", password: "superSecret!!!")
@@ -130,9 +129,5 @@ class ChangePasswordSpec extends GebReportingSpec {
 
         then: "I am at Users page"
         at UsersPage
-    }
-
-    def cleanupSpec() {
-        VokuroDatabase.restoreOriginal()
     }
 }

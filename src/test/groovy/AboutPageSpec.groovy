@@ -1,5 +1,5 @@
 import Pages.AboutPage
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
@@ -11,7 +11,7 @@ I want an About page
 So that I know more about this web
 """)
 @Issue("https://trello.com/c/7PIVUNaw")
-class AboutPageSpec extends GebReportingSpec {
+class AboutPageSpec extends CommonSpecFeatures {
 
     def "About page should exist"() {
         given: "I am at About page"

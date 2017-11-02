@@ -1,5 +1,5 @@
 import Pages.*
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -12,7 +12,7 @@ I want a header in public pages
 So that I can navigate easily to all pages
 """)
 @Issue("https://trello.com/c/87HqKCDP, https://trello.com/c/IlZMPbcA")
-class HeaderSpec extends GebReportingSpec {
+class HeaderSpec extends CommonSpecFeatures {
 
     @Shared
             expectedVokuroBrandText = "Vökuró"

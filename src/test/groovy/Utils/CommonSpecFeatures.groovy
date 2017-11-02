@@ -1,4 +1,10 @@
 package Utils
 
-class CommonSpecFeatures {
+import geb.spock.GebReportingSpec
+
+abstract class CommonSpecFeatures extends GebReportingSpec {
+
+    def setupSpec() {
+        VokuroDatabase.restoreOriginal()
+    }
 }
