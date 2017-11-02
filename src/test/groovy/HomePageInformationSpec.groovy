@@ -1,5 +1,5 @@
 import Pages.HomePage
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
@@ -11,7 +11,7 @@ I want basic info in the Home page
 So that I know what's for
 """)
 @Issue("https://trello.com/c/rzlnz5FX")
-class HomePageInformationSpec extends GebReportingSpec {
+class HomePageInformationSpec extends CommonSpecFeatures {
 
     def "Should see a particular subtitle"() {
         given: "I am at Home page"

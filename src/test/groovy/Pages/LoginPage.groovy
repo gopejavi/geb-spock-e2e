@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderModule
 import Modules.LoginModule
@@ -17,7 +18,7 @@ class LoginPage extends Page {
     static content = {
         header { module HeaderModule }
         mainPanelTitle { $("h2") }
-        generalErrors { $(".main-container").$(".alert") }
+        alerts { module AlertsModule }
         loginForm { module LoginModule }
         footer { module FooterModule }
     }

@@ -2,9 +2,9 @@ import DataObjects.LoginData
 import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.CommonSpecFeatures
 import Utils.DataObjectsHelper
-import Utils.VokuroDatabase
-import geb.spock.GebReportingSpec
+import Utils.Global
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -17,7 +17,7 @@ I want to log in
 So I can access more features
 """)
 @Issue("https://trello.com/c/plRCzj6C")
-class LoginSpec extends GebReportingSpec {
+class LoginSpec extends CommonSpecFeatures {
 
     @Shared
     LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
@@ -42,9 +42,6 @@ class LoginSpec extends GebReportingSpec {
 
         then: "I am at Users Page"
         at UsersPage
-
-        cleanup: //because even if no creating new objects, a login count could be stored, changing initial conditions to other tests
-        VokuroDatabase.restoreOriginal()
     }
 
     def "Should not log in without email"() {
@@ -55,7 +52,7 @@ class LoginSpec extends GebReportingSpec {
         login(emptyMailValidPassword)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "The e-mail is required" }
+        assert alerts.error*.text().any { it == Global.EMAIL_REQUIRED }
 
         where:
         emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
@@ -69,7 +66,7 @@ class LoginSpec extends GebReportingSpec {
         login(validLoginDataExceptEmail)
 
         then: "I see an error message under below the header"
-        assert generalErrors*.text().any { it == "The e-mail is not valid" }
+        assert alerts.error*.text().any { it == Global.EMAIL_NOT_VALID }
 
         where:
         validLoginDataExceptEmail << [
@@ -89,7 +86,7 @@ class LoginSpec extends GebReportingSpec {
         login(validLoginDataExceptPassword)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "The password is required" }
+        assert alerts.error*.text().any { it == Global.PASS_REQUIRED }
 
         where:
         validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
@@ -103,7 +100,7 @@ class LoginSpec extends GebReportingSpec {
         login(badMailPassCombo)
 
         then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "Wrong email/password combination" }
+        assert alerts.error*.text().any { it == Global.WRONG_EMAIL_PASS }
 
         where:
         badMailPassCombo << [

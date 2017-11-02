@@ -1,5 +1,5 @@
 import Pages.PrivacyPolicyPage
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
@@ -11,7 +11,7 @@ I want information about the privacy
 So that I know what will happen with my data
 """)
 @Issue("https://trello.com/c/vST56CrY")
-class PrivacyPolicyPageSpec extends GebReportingSpec {
+class PrivacyPolicyPageSpec extends CommonSpecFeatures {
 
     def "Should see particular info in Privacy Policy page"() {
         given: "I am at Privacy Policy page"

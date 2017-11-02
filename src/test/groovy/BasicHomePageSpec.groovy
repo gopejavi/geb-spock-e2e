@@ -1,5 +1,5 @@
 import Pages.HomePage
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
@@ -11,7 +11,7 @@ I want a Home page
 So that I can start using this web
 """)
 @Issue("https://trello.com/c/x9lV0DqC")
-class BasicHomePageSpec extends GebReportingSpec {
+class BasicHomePageSpec extends CommonSpecFeatures {
 
     def "Home page should exist"() {
         given: "I go to Home page"

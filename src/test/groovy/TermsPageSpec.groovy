@@ -1,5 +1,5 @@
 import Pages.TermsPage
-import geb.spock.GebReportingSpec
+import Utils.CommonSpecFeatures
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Title
@@ -11,7 +11,7 @@ I want a Terms page
 So that I know some rules for using this site
 """)
 @Issue("https://trello.com/c/eobcRpAi")
-class TermsPageSpec extends GebReportingSpec {
+class TermsPageSpec extends CommonSpecFeatures {
 
     def "Should see particular info in Terms page"() {
         given: "I am at Terms Page"

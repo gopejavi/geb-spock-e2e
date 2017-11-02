@@ -1,9 +1,10 @@
 import DataObjects.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
+import Utils.CommonSpecFeatures
 import Utils.DataObjectsHelper
+import Utils.Global
 import Utils.VokuroDatabase
-import geb.spock.GebReportingSpec
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -16,7 +17,7 @@ I want to create an account
 So I access to exclusive features
 """)
 @Issue("https://trello.com/c/IlZMPbcA")
-class CreateAccountSpec extends GebReportingSpec {
+class CreateAccountSpec extends CommonSpecFeatures {
 
     @Shared
     SignupData sharedValidSignupData = new SignupData("gopejavi", "email@mailinator.com", "superSecret", "superSecret", true)
@@ -44,7 +45,7 @@ class CreateAccountSpec extends GebReportingSpec {
         at HomePage
 
         and: "I receive an email confirming the account creation"
-        true //Note: not implemented as app doesn't send emails.
+        true //Note: not implemented as email sending is off.
 
         cleanup:
         VokuroDatabase.restoreOriginal()
@@ -67,16 +68,10 @@ class CreateAccountSpec extends GebReportingSpec {
         signupForm.signupButton.click()
 
         then: "I see error messages under each form input"
-        assert signupForm.nameInputErrors.text() == nameRequiredError
-        assert signupForm.emailInputErrors.text() == emailRequiredError
-        assert signupForm.passwordInputErrors.text() == passwordRequiredError
-        assert signupForm.confirmPasswordInputErrors.text() == confirmPasswordRequiredError
-
-        where:
-        nameRequiredError = "The name is required"
-        emailRequiredError = "The e-mail is required"
-        passwordRequiredError = "The password is required"
-        confirmPasswordRequiredError = "The confirmation password is required"
+        assert signupForm.nameInputErrors.text() == Global.NAME_REQUIRED
+        assert signupForm.emailInputErrors.text() == Global.EMAIL_REQUIRED
+        assert signupForm.passwordInputErrors.text() == Global.PASS_REQUIRED
+        assert signupForm.confirmPasswordInputErrors.text() == Global.CONFIRM_PASS_REQUIRED
     }
 
     def "Should not create account if email is invalid, like #validSignupDataExceptEmail.email"() {
@@ -87,7 +82,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataExceptEmail)
 
         then: "I see an error message under email input"
-        assert signupForm.emailInputErrors.text() == "The e-mail is not valid"
+        assert signupForm.emailInputErrors.text() == Global.EMAIL_NOT_VALID
 
         where:
         validSignupDataExceptEmail << [
@@ -107,7 +102,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataExceptPassword)
 
         then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == "Password is too short. Minimum 8 characters"
+        assert signupForm.passwordInputErrors.text() == Global.PASS_TOO_SHORT
 
         where:
         validSignupDataExceptPassword << [
@@ -125,7 +120,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataExceptUnmatchingPass)
 
         then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == "Password doesn't match confirmation"
+        assert signupForm.passwordInputErrors.text() == Global.PASS_DOESNT_MATCH
 
         where:
         validSignupDataExceptUnmatchingPass << [
@@ -143,7 +138,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataButDontAgreeTerms)
 
         then: "I see an error message under terms agreement checkbox"
-        assert signupForm.termsCheckboxErrors.text() == "Terms and conditions must be accepted"
+        assert signupForm.termsCheckboxErrors.text() == Global.ACCEPT_TERMS
 
         where:
         validSignupDataButDontAgreeTerms = DataObjectsHelper.createDataFrom(sharedValidSignupData, [agreeTermsConditions: false])
@@ -157,7 +152,7 @@ class CreateAccountSpec extends GebReportingSpec {
         signup(validSignupDataWithExistingMail)
 
         then: "I see error message below the header"
-        assert generalErrors.text() == "The email is already registered"
+        assert alerts.error*.text().any { Global.EMAIL_ALREADY_REGISTERED }
 
         where:
         validSignupDataWithExistingMail << [

@@ -1,5 +1,6 @@
 package Pages
 
+import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderModule
 import Modules.TitleWithTextModule
@@ -16,7 +17,7 @@ class AboutPage extends Page {
 
     static content = {
         header { module HeaderModule }
-        generalErrors { $(".main-container").$(".alert") }
+        alerts { module AlertsModule }
         mainPanel { module TitleWithTextModule }
         footer { module FooterModule }
     }
