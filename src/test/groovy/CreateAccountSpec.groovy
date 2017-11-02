@@ -152,7 +152,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataWithExistingMail)
 
         then: "I see error message below the header"
-        assert alerts.error.text() == Global.EMAIL_ALREADY_REGISTERED
+        assert alerts.error*.text().any { Global.EMAIL_ALREADY_REGISTERED }
 
         where:
         validSignupDataWithExistingMail << [

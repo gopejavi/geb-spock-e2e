@@ -112,6 +112,9 @@ class ChangePasswordSpec extends CommonSpecFeatures {
 
         then: "I see an error message below the header"
         assert alerts.error*.text().any { it == Global.WRONG_EMAIL_PASS }
+
+        where:
+        validLoginDataWithOldPassword = validLoginDataWithOldPassword //so it is shown in reports as scenario variable
     }
 
     def "Should log in with new password: #validLoginDataWithNewPassword.email and #validLoginDataWithNewPassword.password"() {
@@ -129,5 +132,8 @@ class ChangePasswordSpec extends CommonSpecFeatures {
 
         then: "I am at Users page"
         at UsersPage
+
+        where:
+        validLoginDataWithNewPassword = validLoginDataWithNewPassword //so it is shown in reports as scenario variable
     }
 }
