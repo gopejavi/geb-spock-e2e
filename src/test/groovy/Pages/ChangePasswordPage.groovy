@@ -7,7 +7,7 @@ import geb.Page
 
 class ChangePasswordPage extends Page {
 
-    static url = "/session/changePassword"
+    static url = "/users/changePassword"
 
     static at = {
         title == "Welcome to Vökuró"
@@ -18,7 +18,7 @@ class ChangePasswordPage extends Page {
         headerLogged { module HeaderLoggedModule }
         mainPanelTitle { $("h2") }
 
-        alertsAtTop { $(".main-container").$(".alert") }
+        alertsAtTop { $(".container").$(".alert") }
         successAlert { alertsAtTop.filter(".alert-success") }
         errorAlert { alertsAtTop.filter(".alert-danger") }
 

@@ -1,12 +1,11 @@
+import DataObjects.ChangePasswordData
 import DataObjects.LoginData
 import Pages.ChangePasswordPage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
-import spock.lang.Issue
-import spock.lang.Narrative
-import spock.lang.Stepwise
-import spock.lang.Title
+import spock.lang.*
 
 @Title("US13: Change Password")
 @Narrative("""
@@ -15,13 +14,20 @@ I want to change my password
 So my account is safe if password is compromised
 """)
 @Issue("https://trello.com/c/8L1aVKg9")
+
+//So we don't have to log in for every single scenario by reusing the state of previous:
 @Stepwise
 class ChangePasswordSpec extends GebReportingSpec {
 
+    @Shared
+            validLoginDataWithOldPassword = new LoginData(email: "gopejavi@mailinator.com", password: "superSecret!!!")
+    @Shared
+            validLoginDataWithNewPassword = new LoginData(email: "gopejavi@mailinator.com", password: "12345678")
+
     def setupSpec() {
         to LoginPage
-        def validLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
-        login(validLoginData)
+        def validInitialLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
+        login(validInitialLoginData)
     }
 
     def "Should have \"username -> change password\" at header"() {
@@ -37,85 +43,95 @@ class ChangePasswordSpec extends GebReportingSpec {
         then: "I am at Change Password Page"
         at ChangePasswordPage
     }
-/*
-    def "Registered user should log in successfully with e-mail #sharedValidLoginData.email, password #sharedValidLoginData.password"() {
-        given: "I am at Log In page"
+
+    def "Should not Should not change password if they don't match, like #unmatchingPasswordsData.password and #unmatchingPasswordsData.confirmPassword"() {
+        given: "I am at Change Password page"
+        true //done before, using Stepwise
+
+        when: "I submit a new password but doesn't match with confirmation"
+        changePassword(unmatchingPasswordsData)
+
+        then: "I see an error message below the header"
+        assert errorAlert*.text().any { it == "Password doesn't match confirmation" }
+
+        where:
+        unmatchingPasswordsData << [
+                new ChangePasswordData(password: "whoeNeedsConfirmation?", confirmPassword: ""),
+                new ChangePasswordData(password: "12345678", confirmPassword: " 12345678 "),
+                new ChangePasswordData(password: "12345678", confirmPassword: "short"),
+                new ChangePasswordData(password: "myNewPassYay!", confirmPassword: "myNewPassYay!!")
+        ]
+    }
+
+    def "Should not change password if they are not valid, like #notValidPasswordsData.password and #notValidPasswordsData.confirmPassword"() {
+        given: "I am at Change Password page"
+        true //done before
+
+        when: "I submit a new password but doesn't match with confirmation"
+        changePassword(notValidPasswordsData)
+
+        then: "I see an error message below the header"
+        assert errorAlert*.text().any { it == "Password is too short. Minimum 8 characters" }
+
+        where:
+        notValidPasswordsData << [
+                new ChangePasswordData(password: "1234567", confirmPassword: "1234567"),
+                new ChangePasswordData(password: "short", confirmPassword: "thisIsNotShort")
+        ]
+    }
+
+    def "Should show success message when password is changed with #validNewPasswordsData.password and #validNewPasswordsData.confirmPassword"() {
+        given: "I am at Change Password page"
+        true //done before
+
+        when: "I submit my new valid password"
+        changePassword(validNewPasswordsData)
+
+        then: "I see a success message"
+        assert successAlert*.text().any { it == "Your password was successfully changed" }
+
+        and: "I am at Change Password page"
+        at ChangePasswordPage
+
+        where:
+        validNewPasswordsData = new ChangePasswordData(password: "12345678", confirmPassword: "12345678")
+    }
+
+    def "Should not be able to log in with old passwords, like #validLoginDataWithOldPassword.email and #validLoginDataWithOldPassword.password"() {
+        given: "I successfully changed my password"
+        true //done before
+
+        and: "I log out"
+        headerLogged.logoutLink.click()
+
+        and: "I am at Log in page"
         to LoginPage
 
-        when: "I log in with valid data"
-        login(sharedValidLoginData)
+        when: "I log in with valid email and old password"
+        login(validLoginDataWithOldPassword)
 
-        then: "I am at Users Page"
+        then: "I see an error message below the header"
+        assert errorAlert*.text().any { it == "Wrong email/password combination" }
+    }
+
+    def "Should log in with new password: #validLoginDataWithNewPassword.email and #validLoginDataWithNewPassword.password"() {
+        given: "I successfully changed my password"
+        true //done before
+
+        and: "I log out"
+        true //done before
+
+        and: "I am at Log in page"
+        true //done before
+
+        when: "I log in with my new password"
+        login(validLoginDataWithNewPassword)
+
+        then: "I am at Users page"
         at UsersPage
+    }
 
-        cleanup: //because even if no creating new objects, a login count could be stored, changing initial conditions to other tests
+    def cleanupSpec() {
         VokuroDatabase.restoreOriginal()
     }
-
-    def "Should not log in without email"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I log in with valid password, empty email"
-        login(emptyMailValidPassword)
-
-        then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "The e-mail is required" }
-
-        where:
-        emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
-    }
-
-    def "Should not login if email is invalid, like #validLoginDataExceptEmail.email"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I fill the displayed form with valid data except email wich is invalid"
-        login(validLoginDataExceptEmail)
-
-        then: "I see an error message under below the header"
-        assert generalErrors*.text().any { it == "The e-mail is not valid" }
-
-        where:
-        validLoginDataExceptEmail << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidMail"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidNeither.com"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "whoCares@aboutDomains"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "asd!)/(/&)]@what.lol"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "email with spaces@omg.com"])
-        ]
-    }
-
-    def "I should not be able to log in without password"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I log in valid data except password wich is blank"
-        login(validLoginDataExceptPassword)
-
-        then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "The password is required" }
-
-        where:
-        validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
-    }
-
-    def "Should not log in with bad email-password combination, like #badMailPassCombo.email and #badMailPassCombo.password"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I log in with a not existent email-password combination"
-        login(badMailPassCombo)
-
-        then: "I see an error message below the header"
-        assert generalErrors*.text().any { it == "Wrong email/password combination" }
-
-        where:
-        badMailPassCombo << [
-                new LoginData("gopejavi@mailinator.com", "12345679"),
-                new LoginData("notInDB@mailinator.com", "superSecret!!!"),
-                new LoginData("fully@inventedEmail.lol", "alsoVeryInvented!"),
-                new LoginData("veronica@phalconphp.com", "superSecret!!!") //both exist in DB (don't match)
-        ]
-    }*/
 }
