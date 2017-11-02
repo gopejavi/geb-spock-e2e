@@ -3,6 +3,7 @@ import DataObjects.LoginData
 import Pages.ChangePasswordPage
 import Pages.LoginPage
 import Pages.UsersPage
+import Utils.Global
 import Utils.VokuroDatabase
 import geb.spock.GebReportingSpec
 import spock.lang.*
@@ -52,7 +53,7 @@ class ChangePasswordSpec extends GebReportingSpec {
         changePassword(unmatchingPasswordsData)
 
         then: "I see an error message below the header"
-        assert errorAlert*.text().any { it == "Password doesn't match confirmation" }
+        assert errorAlert*.text().any { it == Global.PASS_DOESNT_MATCH }
 
         where:
         unmatchingPasswordsData << [
@@ -71,7 +72,7 @@ class ChangePasswordSpec extends GebReportingSpec {
         changePassword(notValidPasswordsData)
 
         then: "I see an error message below the header"
-        assert errorAlert*.text().any { it == "Password is too short. Minimum 8 characters" }
+        assert errorAlert*.text().any { it == Global.PASS_TOO_SHORT }
 
         where:
         notValidPasswordsData << [
@@ -88,7 +89,7 @@ class ChangePasswordSpec extends GebReportingSpec {
         changePassword(validNewPasswordsData)
 
         then: "I see a success message"
-        assert successAlert*.text().any { it == "Your password was successfully changed" }
+        assert successAlert*.text().any { it == Global.PASS_CHANGED }
 
         and: "I am at Change Password page"
         at ChangePasswordPage
@@ -111,7 +112,7 @@ class ChangePasswordSpec extends GebReportingSpec {
         login(validLoginDataWithOldPassword)
 
         then: "I see an error message below the header"
-        assert errorAlert*.text().any { it == "Wrong email/password combination" }
+        assert errorAlert*.text().any { it == Global.WRONG_EMAIL_PASS }
     }
 
     def "Should log in with new password: #validLoginDataWithNewPassword.email and #validLoginDataWithNewPassword.password"() {
