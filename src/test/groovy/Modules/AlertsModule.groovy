@@ -6,8 +6,9 @@ class AlertsModule extends Module {
 
     static content = {
         all { $(".container").$(".alert") }
-        info { all.filter(".alert-info") }
         success { all.filter(".alert-success") }
+        info { all.filter(".alert-info") }
+        warning { all.filter(".alert-warning") }
         error { all.filter(".alert-danger") }
     }
 }

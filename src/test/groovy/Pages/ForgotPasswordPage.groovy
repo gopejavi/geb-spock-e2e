@@ -2,29 +2,28 @@ package Pages
 
 import Modules.AlertsModule
 import Modules.FooterModule
+import Modules.ForgotPasswordModule
 import Modules.HeaderModule
-import Modules.SignupModule
 import geb.Page
 
-class CreateAccountPage extends Page {
+class ForgotPasswordPage extends Page {
 
-    static url = "/session/signup"
+    static url = "/session/forgotPassword"
 
     static at = {
         title == "Welcome to Vökuró"
-        mainPanelTitle.text() == "Sign Up"
+        mainPanelTitle.text() == "Forgot Password?"
     }
 
     static content = {
         header { module HeaderModule }
         mainPanelTitle { $("h2") }
         alerts { module AlertsModule }
-        signupForm { module SignupModule }
+        forgotPasswordForm { module ForgotPasswordModule }
         footer { module FooterModule }
     }
 
-    //encapsulation: Page does not care about how to sign up. SignupModule does.
-    def signup(signupData) {
-        signupForm.signup(signupData)
+    def sendEmailToRestorePassword(email) {
+        forgotPasswordForm.sendEmailToRestorePassword(email)
     }
 }

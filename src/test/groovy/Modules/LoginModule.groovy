@@ -13,7 +13,7 @@ class LoginModule extends Module {
         goButton { form.$(".btn", value: "go") }
     }
 
-    def login(def loginData) {
+    def login(loginData) {
         emailInput = loginData.email
         passwordInput = loginData.password
         goButton.click()

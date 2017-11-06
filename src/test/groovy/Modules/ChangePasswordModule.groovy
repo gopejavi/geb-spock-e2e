@@ -13,7 +13,7 @@ class ChangePasswordModule extends Module {
         changePasswordButton { form.$(".btn", value: "Change Password") }
     }
 
-    def changePassword(def newPasswordData) {
+    def changePassword(newPasswordData) {
         passwordInput = newPasswordData.password
         confirmPasswordInput = newPasswordData.confirmPassword
         changePasswordButton.click()

@@ -4,7 +4,7 @@ import Pages.ChangePasswordPage
 import Pages.LoginPage
 import Pages.UsersPage
 import Utils.CommonSpecFeatures
-import Utils.Global
+import Utils.Const
 import spock.lang.*
 
 @Title("US13: Change Password")
@@ -44,7 +44,7 @@ class ChangePasswordSpec extends CommonSpecFeatures {
         at ChangePasswordPage
     }
 
-    def "Should not Should not change password if they don't match, like #unmatchingPasswordsData.password and #unmatchingPasswordsData.confirmPassword"() {
+    def "Should not change password if they don't match, like #unmatchingPasswordsData.password and #unmatchingPasswordsData.confirmPassword"() {
         given: "I am at Change Password page"
         true //done before, using Stepwise
 
@@ -52,7 +52,7 @@ class ChangePasswordSpec extends CommonSpecFeatures {
         changePassword(unmatchingPasswordsData)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.PASS_DOESNT_MATCH }
+        assert alerts.error*.text().any { it == Const.PASS_DOESNT_MATCH }
 
         where:
         unmatchingPasswordsData << [
@@ -71,7 +71,7 @@ class ChangePasswordSpec extends CommonSpecFeatures {
         changePassword(notValidPasswordsData)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.PASS_TOO_SHORT }
+        assert alerts.error*.text().any { it == Const.PASS_TOO_SHORT }
 
         where:
         notValidPasswordsData << [
@@ -88,7 +88,7 @@ class ChangePasswordSpec extends CommonSpecFeatures {
         changePassword(validNewPasswordsData)
 
         then: "I see a success message"
-        assert alerts.success*.text().any { it == Global.PASS_CHANGED }
+        assert alerts.success*.text().any { it == Const.PASS_CHANGED }
 
         and: "I am at Change Password page"
         at ChangePasswordPage
@@ -111,7 +111,7 @@ class ChangePasswordSpec extends CommonSpecFeatures {
         login(validLoginDataWithOldPassword)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.WRONG_EMAIL_PASS }
+        assert alerts.error*.text().any { it == Const.WRONG_EMAIL_PASS }
 
         where:
         validLoginDataWithOldPassword = validLoginDataWithOldPassword //so it is shown in reports as scenario variable

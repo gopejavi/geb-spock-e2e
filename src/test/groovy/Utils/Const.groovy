@@ -2,17 +2,15 @@ package Utils
 
 import groovy.sql.Sql
 
-class Global {
-    static final String ip = System.getProperty('geb.build.baseUrl').replace("http://", "")
-    static final Sql mySqlConnection = Sql.newInstance(
-            "jdbc:mysql://$ip/vokuro?allowMultiQueries=true",
+class Const {
+    static final String APP_MACHINE_IP = System.getProperty('geb.build.baseUrl').replace("http://", "")
+    static final Sql MYSQL_CONNECTION = Sql.newInstance(
+            "jdbc:mysql://$APP_MACHINE_IP/vokuro?allowMultiQueries=true",
             "root",
             "",
             "com.mysql.cj.jdbc.Driver"
     )
-
     // ALERT MESSAGES
-
     static final String NAME_REQUIRED = "The name is required",
                         EMAIL_REQUIRED = "The e-mail is required",
                         EMAIL_NOT_VALID = "The e-mail is not valid",
@@ -24,5 +22,6 @@ class Global {
                         PASS_CHANGED = "Your password was successfully changed",
                         ACCEPT_TERMS = "Terms and conditions must be accepted",
                         WRONG_EMAIL_PASS = "Wrong email/password combination",
-                        DONT_HAVE_ACCESS = "You don't have access to this module: private"
+                        DONT_HAVE_ACCESS = "You don't have access to this module: private",
+                        EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails."
 }

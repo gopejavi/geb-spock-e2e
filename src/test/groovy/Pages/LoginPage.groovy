@@ -20,6 +20,7 @@ class LoginPage extends Page {
         mainPanelTitle { $("h2") }
         alerts { module AlertsModule }
         loginForm { module LoginModule }
+        forgotPasswordLink { $(".forgot").$("a", href: "/session/forgotPassword") }
         footer { module FooterModule }
     }
 
