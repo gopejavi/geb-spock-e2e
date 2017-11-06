@@ -24,7 +24,7 @@ class ChangePasswordPage extends Page {
     }
 
     //encapsulation: Page does not care about how to sign up. SignupModule does.
-    def changePassword(def newPasswordData) {
+    def changePassword(newPasswordData) {
         changePasswordForm.changePassword(newPasswordData)
     }
 }

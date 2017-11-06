@@ -2,8 +2,8 @@ import DataObjects.SignupData
 import Pages.CreateAccountPage
 import Pages.HomePage
 import Utils.CommonSpecFeatures
+import Utils.Const
 import Utils.DataObjectsHelper
-import Utils.Global
 import Utils.VokuroDatabase
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -68,10 +68,10 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signupForm.signupButton.click()
 
         then: "I see error messages under each form input"
-        assert signupForm.nameInputErrors.text() == Global.NAME_REQUIRED
-        assert signupForm.emailInputErrors.text() == Global.EMAIL_REQUIRED
-        assert signupForm.passwordInputErrors.text() == Global.PASS_REQUIRED
-        assert signupForm.confirmPasswordInputErrors.text() == Global.CONFIRM_PASS_REQUIRED
+        assert signupForm.nameInputErrors.text() == Const.NAME_REQUIRED
+        assert signupForm.emailInputErrors.text() == Const.EMAIL_REQUIRED
+        assert signupForm.passwordInputErrors.text() == Const.PASS_REQUIRED
+        assert signupForm.confirmPasswordInputErrors.text() == Const.CONFIRM_PASS_REQUIRED
     }
 
     def "Should not create account if email is invalid, like #validSignupDataExceptEmail.email"() {
@@ -82,7 +82,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataExceptEmail)
 
         then: "I see an error message under email input"
-        assert signupForm.emailInputErrors.text() == Global.EMAIL_NOT_VALID
+        assert signupForm.emailInputErrors.text() == Const.EMAIL_NOT_VALID
 
         where:
         validSignupDataExceptEmail << [
@@ -102,7 +102,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataExceptPassword)
 
         then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == Global.PASS_TOO_SHORT
+        assert signupForm.passwordInputErrors.text() == Const.PASS_TOO_SHORT
 
         where:
         validSignupDataExceptPassword << [
@@ -120,7 +120,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataExceptUnmatchingPass)
 
         then: "I see an error message under password input"
-        assert signupForm.passwordInputErrors.text() == Global.PASS_DOESNT_MATCH
+        assert signupForm.passwordInputErrors.text() == Const.PASS_DOESNT_MATCH
 
         where:
         validSignupDataExceptUnmatchingPass << [
@@ -138,7 +138,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataButDontAgreeTerms)
 
         then: "I see an error message under terms agreement checkbox"
-        assert signupForm.termsCheckboxErrors.text() == Global.ACCEPT_TERMS
+        assert signupForm.termsCheckboxErrors.text() == Const.ACCEPT_TERMS
 
         where:
         validSignupDataButDontAgreeTerms = DataObjectsHelper.createDataFrom(sharedValidSignupData, [agreeTermsConditions: false])
@@ -152,7 +152,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signup(validSignupDataWithExistingMail)
 
         then: "I see error message below the header"
-        assert alerts.error*.text().any { Global.EMAIL_ALREADY_REGISTERED }
+        assert alerts.error*.text().any { Const.EMAIL_ALREADY_REGISTERED }
 
         where:
         validSignupDataWithExistingMail << [

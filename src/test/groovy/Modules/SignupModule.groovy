@@ -25,7 +25,7 @@ class SignupModule extends Module {
         signupButton { form.$(".btn", value: "Sign Up") }
     }
 
-    def signup(def signupData) {
+    def signup(signupData) {
         nameInput = signupData.name
         emailInput = signupData.email
         passwordInput = signupData.password

@@ -3,7 +3,7 @@ import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
 import Utils.CommonSpecFeatures
-import Utils.Global
+import Utils.Const
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -49,6 +49,6 @@ class LogoutSpec extends CommonSpecFeatures {
 
         then: "I stay at Home page, showing error below the header"
         at HomePage
-        assert alerts.info*.text().any { it == Global.DONT_HAVE_ACCESS }
+        assert alerts.info*.text().any { it == Const.DONT_HAVE_ACCESS }
     }
 }

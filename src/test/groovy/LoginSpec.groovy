@@ -3,8 +3,8 @@ import Pages.HomePage
 import Pages.LoginPage
 import Pages.UsersPage
 import Utils.CommonSpecFeatures
+import Utils.Const
 import Utils.DataObjectsHelper
-import Utils.Global
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -52,7 +52,7 @@ class LoginSpec extends CommonSpecFeatures {
         login(emptyMailValidPassword)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.EMAIL_REQUIRED }
+        assert alerts.error*.text().any { it == Const.EMAIL_REQUIRED }
 
         where:
         emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
@@ -66,7 +66,7 @@ class LoginSpec extends CommonSpecFeatures {
         login(validLoginDataExceptEmail)
 
         then: "I see an error message under below the header"
-        assert alerts.error*.text().any { it == Global.EMAIL_NOT_VALID }
+        assert alerts.error*.text().any { it == Const.EMAIL_NOT_VALID }
 
         where:
         validLoginDataExceptEmail << [
@@ -86,7 +86,7 @@ class LoginSpec extends CommonSpecFeatures {
         login(validLoginDataExceptPassword)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.PASS_REQUIRED }
+        assert alerts.error*.text().any { it == Const.PASS_REQUIRED }
 
         where:
         validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
@@ -100,7 +100,7 @@ class LoginSpec extends CommonSpecFeatures {
         login(badMailPassCombo)
 
         then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Global.WRONG_EMAIL_PASS }
+        assert alerts.error*.text().any { it == Const.WRONG_EMAIL_PASS }
 
         where:
         badMailPassCombo << [
