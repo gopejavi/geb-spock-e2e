@@ -6,7 +6,6 @@ import Utils.CommonSpecFeatures
 import Utils.Const
 import spock.lang.Issue
 import spock.lang.Narrative
-import spock.lang.Shared
 import spock.lang.Title
 
 @Title("US10: Log out")
@@ -18,12 +17,9 @@ So nobody steal my super-secret info
 @Issue("https://trello.com/c/S97G1noM")
 class LogoutSpec extends CommonSpecFeatures {
 
-    @Shared
-    LoginData sharedValidLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
-
     def setup() {
         to LoginPage
-        login(sharedValidLoginData)
+        login(new LoginData("gopejavi@mailinator.com", "superSecret!!!"))
     }
 
     def "Header should have a log out link when logged in"() {

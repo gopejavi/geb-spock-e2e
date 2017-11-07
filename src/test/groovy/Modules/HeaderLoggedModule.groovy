@@ -9,9 +9,11 @@ class HeaderLoggedModule extends Module {
         brand { header.$("a.brand") }
 
         homeLink { header.$("a", href: "/index") }
+        usersLink { header.$("a", href: "/users") }
 
-        userDropdown { header.$(".dropdown") }//has con username?
+        userDropdown { header.$(".dropdown") }//select with username? "has"...
         changePasswordLink { userDropdown.$("a", href: "/users/changePassword") }
         logoutLink { header.$("a", href: "/session/logout") }
     }
+
 }
