@@ -20,6 +20,7 @@ class UsersSearchResultsPage extends Page {
         alerts { module AlertsModule }
         resultsTable { $("table") }
         searchResults { resultsTable.$("tbody tr").moduleList(UsersSearchResultsModule) }
+        pageButtons { resultsTable.$("tfoot").$("a", text: iContains(it)) }
         footer { module FooterModule }
     }
 }

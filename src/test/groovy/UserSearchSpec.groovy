@@ -35,89 +35,51 @@ class UserSearchSpec extends CommonSpecFeatures {
 
         then: "I see search results as users with different names and emails"
         at UsersSearchResultsPage
-        assert searchResults*.id == 1..10
         assert searchResults.any { it.name == "gopejavi" }
         assert searchResults.any { it.name == "e" }
         assert searchResults.any { it.email == "gopejavi@mailinator.com" }
         assert searchResults.any { it.email == "bob@phalconphp.com" }
     }
-/*
-    def "Registered user should log in successfully with e-mail #sharedValidLoginData.email, password #sharedValidLoginData.password"() {
-        given: "I am at Log In page"
-        to LoginPage
 
-        when: "I log in with valid data"
-        login(sharedValidLoginData)
+    def "Should paginate results: in page #numPage I see #amount users with ids from #firstUserIdAtPage to #lastUserIdAtPage"() {
+        given: "I am at Users Page"
+        to UsersPage
 
-        then: "I am at Users Page"
-        at UsersPage
-    }
+        when: "I search with no filters"
+        search(new UserSearchData("", ""))
 
-    def "Should not log in without email"() {
-        given: "I am at Log In page"
-        to LoginPage
+        and: "I go to a page"
+        to UsersSearchResultsPage, page: numPage
 
-        when: "I log in with valid password, empty email"
-        login(emptyMailValidPassword)
-
-        then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Const.EMAIL_REQUIRED }
+        then: "I see some users with particular ids"
+        assert searchResults.size() == amount
+        assert searchResults*.id == firstUserIdAtPage..lastUserIdAtPage
 
         where:
-        emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
+        numPage | amount | firstUserIdAtPage | lastUserIdAtPage
+        1       | 10     | 1                 | 10
+        2       | 10     | 11                | 20
+        3       | 1      | 21                | 21
     }
 
-    def "Should not login if email is invalid, like #validLoginDataExceptEmail.email"() {
-        given: "I am at Log In page"
-        to LoginPage
+    def "Should have links to #page page for faster navigation"() {
+        given: "I am at Users Page"
+        to UsersPage
 
-        when: "I fill the displayed form with valid data except email wich is invalid"
-        login(validLoginDataExceptEmail)
+        when: "I search with no filters"
+        search(new UserSearchData("", ""))
 
-        then: "I see an error message under below the header"
-        assert alerts.error*.text().any { it == Const.EMAIL_NOT_VALID }
+        and: "I click on Last or First page after being in one in the middle"
+        to UsersSearchResultsPage, page: 2
+        pageButtons(page).click()
+
+        then: "I see some users with particular ids"
+        assert searchResults.size() == amount
+        assert searchResults*.id == firstUserIdAtPage..lastUserIdAtPage
 
         where:
-        validLoginDataExceptEmail << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidMail"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidNeither.com"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "whoCares@aboutDomains"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "asd!)/(/&)]@what.lol"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "email with spaces@omg.com"])
-        ]
+        page    | amount | firstUserIdAtPage | lastUserIdAtPage
+        "first" | 10     | 1                 | 10
+        "last"  | 1      | 21                | 21
     }
-
-    def "I should not be able to log in without password"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I log in valid data except password wich is blank"
-        login(validLoginDataExceptPassword)
-
-        then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Const.PASS_REQUIRED }
-
-        where:
-        validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
-    }
-
-    def "Should not log in with bad email-password combination, like #badMailPassCombo.email and #badMailPassCombo.password"() {
-        given: "I am at Log In page"
-        to LoginPage
-
-        when: "I log in with a not existent email-password combination"
-        login(badMailPassCombo)
-
-        then: "I see an error message below the header"
-        assert alerts.error*.text().any { it == Const.WRONG_EMAIL_PASS }
-
-        where:
-        badMailPassCombo << [
-                new LoginData("gopejavi@mailinator.com", "12345679"),
-                new LoginData("notInDB@mailinator.com", "superSecret!!!"),
-                new LoginData("fully@inventedEmail.lol", "alsoVeryInvented!"),
-                new LoginData("veronica@phalconphp.com", "superSecret!!!") //both exist in DB (don't match)
-        ]
-    }
-    */
 }
