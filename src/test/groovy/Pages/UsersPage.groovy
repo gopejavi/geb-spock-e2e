@@ -3,6 +3,7 @@ package Pages
 import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
+import Modules.UsersSearchFormModule
 import geb.Page
 
 class UsersPage extends Page {
@@ -18,6 +19,11 @@ class UsersPage extends Page {
         headerLogged { module HeaderLoggedModule }
         alerts { module AlertsModule }
         mainPanelTitle { $("h2") }
+        searchForm { module UsersSearchFormModule }
         footer { module FooterModule }
+    }
+
+    def search(userSearchData) {
+        searchForm.search(userSearchData)
     }
 }
