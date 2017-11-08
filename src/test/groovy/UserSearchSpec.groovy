@@ -4,6 +4,7 @@ import Pages.LoginPage
 import Pages.UsersPage
 import Pages.UsersSearchResultsPage
 import Utils.CommonSpecFeatures
+import Utils.Const
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Stepwise
@@ -41,7 +42,7 @@ class UserSearchSpec extends CommonSpecFeatures {
         assert searchResults.any { it.email == "bob@phalconphp.com" }
     }
 
-    def "Should paginate results: in page #numPage I see #amount users with ids from #firstUserIdAtPage to #lastUserIdAtPage"() {
+    def "Should paginate results: in page #numPage I see #numResults users with ids from #firstUserIdAtPage to #lastUserIdAtPage"() {
         given: "I am at Users Page"
         to UsersPage
 
@@ -52,14 +53,14 @@ class UserSearchSpec extends CommonSpecFeatures {
         to UsersSearchResultsPage, page: numPage
 
         then: "I see some users with particular ids"
-        assert searchResults.size() == amount
+        assert searchResults.size() == numResults
         assert searchResults*.id == firstUserIdAtPage..lastUserIdAtPage
 
         where:
-        numPage | amount | firstUserIdAtPage | lastUserIdAtPage
-        1       | 10     | 1                 | 10
-        2       | 10     | 11                | 20
-        3       | 1      | 21                | 21
+        numPage | numResults | firstUserIdAtPage | lastUserIdAtPage
+        1       | 10         | 1                 | 10
+        2       | 10         | 11                | 20
+        3       | 1          | 21                | 21
     }
 
     def "Should have links to #page page for faster navigation"() {
@@ -74,12 +75,60 @@ class UserSearchSpec extends CommonSpecFeatures {
         pageButtons(page).click()
 
         then: "I see some users with particular ids"
-        assert searchResults.size() == amount
+        assert searchResults.size() == numResults
         assert searchResults*.id == firstUserIdAtPage..lastUserIdAtPage
 
         where:
-        page    | amount | firstUserIdAtPage | lastUserIdAtPage
-        "first" | 10     | 1                 | 10
-        "last"  | 1      | 21                | 21
+        page    | numResults | firstUserIdAtPage | lastUserIdAtPage
+        "first" | 10         | 1                 | 10
+        "last"  | 1          | 21                | 21
+    }
+
+    def "Should be able to filter users: for name '#nameFilter' and email #emailFilter we see '#numResults'"() {
+        given: "I am at Users Page"
+        to UsersPage
+
+        when: "I search filtering by name and/or email"
+        search(new UserSearchData(nameFilter, emailFilter))
+
+        then: "I see a expected number of results, all containing that name (case insensitive)"
+        at UsersSearchResultsPage
+        assert searchResults.size() == numResults
+        assert searchResults*.name.every { iContains(nameFilter) }
+        assert searchResults*.email.every { iContains(emailFilter) }
+
+        where:
+        nameFilter | emailFilter               | numResults
+        "gopejavi" | ""                        | 1
+        "JAVI"     | ""                        | 1
+        "er"       | ""                        | 2
+        "a"        | ""                        | 4
+        ""         | "phalconphp"              | 4
+        ""         | "gopejavi@mailinator.com" | 1
+        ""         | "PHP"                     | 4
+        ""         | "er"                      | 2
+        "gopejavi" | "mailinator"              | 1
+        "er"       | "ik"                      | 1
+        "g"        | "@"                       | 3
+    }
+
+    def "Should not return any user and show alert when any filter matches"() {
+        given: "I am at Users Page"
+        to UsersPage
+
+        when: "I search filtering by name and/or email that give no results"
+        search(new UserSearchData(nameFilter, emailFilter))
+
+        then: "I stay at the users page and see an info message below the header"
+        at UsersPage
+        assert alerts.info*.text().any { it == Const.DIDNT_FIND_USERS }
+
+        where:
+        nameFilter   | emailFilter
+        "iDontExist" | ""
+        ""           | "iDontExist"
+        "gopejavi"   | "iDontExist"
+        "iDontExist" | "phalconphp"
+        "gopejavi"   | "phalconphp"
     }
 }
