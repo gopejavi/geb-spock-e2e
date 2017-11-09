@@ -3,24 +3,24 @@ package Pages
 import Modules.AlertsModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
-import Modules.UsersSearchFormModule
+import Modules.UsersCreateFormModule
 import geb.Page
 
-class UsersPage extends Page {
+class CreateUserPage extends Page {
 
-    static url = "/users"
+    static url = "/users/create"
 
     static at = {
         title == "Welcome to Vökuró"
-        mainPanelTitle.text() == "Search users"
+        mainPanelTitle.text() == "Create a User"
     }
 
     static content = {
         headerLogged { module HeaderLoggedModule }
         alerts { module AlertsModule }
-        createUserButton { $(".btn", href: "/users/create") }
+        previousPage { $(".pager .previous") }
         mainPanelTitle { $("h2") }
-        searchForm { module UsersSearchFormModule }
+        createForm { module UsersCreateFormModule }
         footer { module FooterModule }
     }
 

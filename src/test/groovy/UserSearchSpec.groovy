@@ -1,9 +1,7 @@
-import DataObjects.LoginData
 import DataObjects.UserSearchData
-import Pages.LoginPage
 import Pages.UsersPage
 import Pages.UsersSearchResultsPage
-import Utils.CommonSpecFeatures
+import Utils.CommonLoggedSpecFeatures
 import Utils.Const
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -18,14 +16,7 @@ So I know who is registered
 """)
 @Issue("https://trello.com/c/RVupwgNJ")
 @Stepwise
-class UserSearchSpec extends CommonSpecFeatures {
-
-    //def searchFilters = new UserSearchFilters("")
-
-    def setupSpec() {
-        to LoginPage
-        login(new LoginData("gopejavi@mailinator.com", "superSecret!!!"))
-    }
+class UserSearchSpec extends CommonLoggedSpecFeatures {
 
     def "Should list all kind of users when searching without filters"() {
         given: "I am at Users Page"

@@ -17,12 +17,12 @@ class Const {
                         EMAIL_ALREADY_REGISTERED = "The email is already registered",
                         PASS_REQUIRED = "The password is required",
                         PASS_TOO_SHORT = "Password is too short. Minimum 8 characters",
-            CONFIRM_PASS_REQUIRED = "The confirmation password is required",
-            PASS_DOESNT_MATCH = "Password doesn't match confirmation",
-            PASS_CHANGED = "Your password was successfully changed",
-            ACCEPT_TERMS = "Terms and conditions must be accepted",
-            WRONG_EMAIL_PASS = "Wrong email/password combination",
-            DONT_HAVE_ACCESS = "You don't have access to this module: private",
-            EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails.",
-            DIDNT_FIND_USERS = "The search did not find any users"
+                        CONFIRM_PASS_REQUIRED = "The confirmation password is required",
+                        PASS_DOESNT_MATCH = "Password doesn't match confirmation",
+                        PASS_CHANGED = "Your password was successfully changed",
+                        ACCEPT_TERMS = "Terms and conditions must be accepted",
+                        WRONG_EMAIL_PASS = "Wrong email/password combination",
+                        DONT_HAVE_ACCESS = "You don't have access to this module: private",
+                        EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails.",
+                        DIDNT_FIND_USERS = "The search did not find any users"
 }
