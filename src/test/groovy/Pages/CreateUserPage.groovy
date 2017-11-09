@@ -1,9 +1,9 @@
 package Pages
 
 import Modules.AlertsModule
+import Modules.CreateUserFormModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
-import Modules.UsersCreateFormModule
 import geb.Page
 
 class CreateUserPage extends Page {
@@ -18,13 +18,13 @@ class CreateUserPage extends Page {
     static content = {
         headerLogged { module HeaderLoggedModule }
         alerts { module AlertsModule }
-        previousPage { $(".pager .previous") }
+        goBackButton { $(".pager .previous") }
         mainPanelTitle { $("h2") }
-        createForm { module UsersCreateFormModule }
+        createForm { module CreateUserFormModule }
         footer { module FooterModule }
     }
 
-    def search(userSearchData) {
-        searchForm.search(userSearchData)
+    def create(userSearchData) {
+        createForm.create(userSearchData)
     }
 }

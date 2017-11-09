@@ -2,22 +2,22 @@ package Modules
 
 import geb.Module
 
-class UsersCreateFormModule extends Module {
+class CreateUserFormModule extends Module {
 
     static content = {
         form { $("form") }
 
         nameInput { form.$("#name") }
         emailInput { form.$("#email") }
-        profileSelect { form.$("profilesId") }
+        profileSelect { form.$("#profilesId") }
 
-        searchButton { form.$(".btn", value: "Save") }
+        createButton { form.$(".btn", value: "Save") }
     }
 
     def create(userCreateData) {
         nameInput = userCreateData.name
         emailInput = userCreateData.email
-        profileSelect = userCreateData.profile
-        searchButton.click()
+        profileSelect = "Administrators"//for now. Later: userCreateData.profile
+        createButton.click()
     }
 }
