@@ -15,10 +15,8 @@ So that I can navigate easily to all pages
 class HeaderSpec extends CommonSpecFeatures {
 
     @Shared
-            expectedVokuroBrandText = "Vökuró"
-    @Shared
-            expectedHomeLinkText = "Home"
-    @Shared
+            expectedVokuroBrandText = "Vökuró",
+            expectedHomeLinkText = "Home",
             expectedAboutLinkText = "About"
 
     def "Should have a header in Home page"() {

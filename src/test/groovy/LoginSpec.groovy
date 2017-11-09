@@ -4,11 +4,12 @@ import Pages.LoginPage
 import Pages.UsersPage
 import Utils.CommonSpecFeatures
 import Utils.Const
-import Utils.DataObjectsHelper
 import spock.lang.Issue
 import spock.lang.Narrative
 import spock.lang.Shared
 import spock.lang.Title
+
+import static Utils.DataObjectsHelper.createDataFrom
 
 @Title("US9: Log in")
 @Narrative("""
@@ -55,7 +56,7 @@ class LoginSpec extends CommonSpecFeatures {
         assert alerts.error*.text().any { it == Const.EMAIL_REQUIRED }
 
         where:
-        emptyMailValidPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: ""])
+        emptyMailValidPassword = createDataFrom(sharedValidLoginData, [email: ""])
     }
 
     def "Should not login if email is invalid, like #validLoginDataExceptEmail.email"() {
@@ -70,11 +71,11 @@ class LoginSpec extends CommonSpecFeatures {
 
         where:
         validLoginDataExceptEmail << [
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidMail"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "thisIsNotValidNeither.com"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "whoCares@aboutDomains"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "asd!)/(/&)]@what.lol"]),
-                DataObjectsHelper.createDataFrom(sharedValidLoginData, [email: "email with spaces@omg.com"])
+                createDataFrom(sharedValidLoginData, [email: "thisIsNotValidMail"]),
+                createDataFrom(sharedValidLoginData, [email: "thisIsNotValidNeither.com"]),
+                createDataFrom(sharedValidLoginData, [email: "whoCares@aboutDomains"]),
+                createDataFrom(sharedValidLoginData, [email: "asd!)/(/&)]@what.lol"]),
+                createDataFrom(sharedValidLoginData, [email: "email with spaces@omg.com"])
         ]
     }
 
@@ -89,7 +90,7 @@ class LoginSpec extends CommonSpecFeatures {
         assert alerts.error*.text().any { it == Const.PASS_REQUIRED }
 
         where:
-        validLoginDataExceptPassword = DataObjectsHelper.createDataFrom(sharedValidLoginData, [password: ""])
+        validLoginDataExceptPassword = createDataFrom(sharedValidLoginData, [password: ""])
     }
 
     def "Should not log in with bad email-password combination, like #badMailPassCombo.email and #badMailPassCombo.password"() {

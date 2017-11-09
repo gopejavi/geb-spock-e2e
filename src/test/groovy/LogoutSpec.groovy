@@ -17,7 +17,7 @@ So nobody steal my super-secret info
 @Issue("https://trello.com/c/S97G1noM")
 class LogoutSpec extends CommonSpecFeatures {
 
-    def setup() {
+    def setup() { //not extending from CommonLoggedSpecFeatures as this log in is for each scenario.
         to LoginPage
         login(new LoginData("gopejavi@mailinator.com", "superSecret!!!"))
     }

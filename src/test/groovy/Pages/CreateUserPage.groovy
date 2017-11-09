@@ -1,30 +1,30 @@
 package Pages
 
 import Modules.AlertsModule
+import Modules.CreateUserFormModule
 import Modules.FooterModule
 import Modules.HeaderLoggedModule
-import Modules.UsersSearchFormModule
 import geb.Page
 
-class UsersPage extends Page {
+class CreateUserPage extends Page {
 
-    static url = "/users"
+    static url = "/users/create"
 
     static at = {
         title == "Welcome to Vökuró"
-        mainPanelTitle.text() == "Search users"
+        mainPanelTitle.text() == "Create a User"
     }
 
     static content = {
         headerLogged { module HeaderLoggedModule }
         alerts { module AlertsModule }
-        createUserButton { $(".btn", href: "/users/create") }
+        goBackButton { $(".pager .previous") }
         mainPanelTitle { $("h2") }
-        searchForm { module UsersSearchFormModule }
+        createForm { module CreateUserFormModule }
         footer { module FooterModule }
     }
 
-    def search(userSearchData) {
-        searchForm.search(userSearchData)
+    def create(userSearchData) {
+        createForm.create(userSearchData)
     }
 }

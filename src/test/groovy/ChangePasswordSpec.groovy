@@ -3,7 +3,7 @@ import DataObjects.LoginData
 import Pages.ChangePasswordPage
 import Pages.LoginPage
 import Pages.UsersPage
-import Utils.CommonSpecFeatures
+import Utils.CommonLoggedSpecFeatures
 import Utils.Const
 import spock.lang.*
 
@@ -17,18 +17,11 @@ So my account is safe if password is compromised
 
 //So we don't have to log in for every single scenario by reusing the state of previous:
 @Stepwise
-class ChangePasswordSpec extends CommonSpecFeatures {
+class ChangePasswordSpec extends CommonLoggedSpecFeatures {
 
     @Shared
-            validLoginDataWithOldPassword = new LoginData(email: "gopejavi@mailinator.com", password: "superSecret!!!")
-    @Shared
+            validLoginDataWithOldPassword = new LoginData(email: "gopejavi@mailinator.com", password: "superSecret!!!"),
             validLoginDataWithNewPassword = new LoginData(email: "gopejavi@mailinator.com", password: "12345678")
-
-    def setupSpec() {
-        to LoginPage
-        def validInitialLoginData = new LoginData("gopejavi@mailinator.com", "superSecret!!!")
-        login(validInitialLoginData)
-    }
 
     def "Should have \"username -> change password\" at header"() {
         given: "Given I am at Users page"

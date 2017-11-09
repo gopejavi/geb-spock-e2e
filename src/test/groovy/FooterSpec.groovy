@@ -15,10 +15,8 @@ So that I can always see a lovely message and links to Policy and Terms pages
 class FooterSpec extends CommonSpecFeatures {
 
     @Shared
-            expectedLovelyMessage = "Made with love"
-    @Shared
-            expectedPrivacyLinkText = "Privacy Policy"
-    @Shared
+            expectedLovelyMessage = "Made with love",
+            expectedPrivacyLinkText = "Privacy Policy",
             expectedTermsLinkText = "Terms"
 
     def "Should have a header in Home page"() {
