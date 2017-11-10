@@ -24,7 +24,7 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
             createUserGopejavi = new CreateUserData("gopejavi", "nameCan@Already.exist"),
             createUserUgc = new CreateUserData("UGC", "ugc@absolutely.beer")
 
-    def "Should navigate to Create Usert Page from Users Page"() {
+    def "Should navigate to Create User Page from Users Page"() {
         given: "I am at Users page"
         to UsersPage
 

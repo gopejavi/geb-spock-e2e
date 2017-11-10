@@ -14,9 +14,9 @@ class CreateUserFormModule extends Module {
         createButton { form.$(".btn", value: "Save") }
     }
 
-    def create(userCreateData) {
-        nameInput = userCreateData.name
-        emailInput = userCreateData.email
+    def create(createUserData) {
+        nameInput = createUserData.name
+        emailInput = createUserData.email
         profileSelect = "Administrators"//for now. Later: userCreateData.profile
         createButton.click()
     }

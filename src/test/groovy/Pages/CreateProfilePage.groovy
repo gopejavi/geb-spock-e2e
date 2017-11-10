@@ -1,17 +1,16 @@
 package Pages
 
 import Modules.AlertsModule
-import Modules.CreateUserFormModule
 import Modules.HeaderLoggedModule
 import geb.Page
 
-class CreateUserPage extends Page {
+class CreateProfilePage extends Page {
 
-    static url = "/users/create"
+    static url = "/profiles/create"
 
     static at = {
         title == "Welcome to Vökuró"
-        mainPanelTitle.text() == "Create a User"
+        mainPanelTitle.text() == "Create a Profile"
     }
 
     static content = {
@@ -19,10 +18,10 @@ class CreateUserPage extends Page {
         alerts { module AlertsModule }
         goBackButton { $(".pager .previous") }
         mainPanelTitle { $("h2") }
-        createForm { module CreateUserFormModule }
+        createForm { module CreateProfileFormModule }
     }
 
-    def create(createUserData) {
-        createForm.create(createUserData)
+    def create(createProfileData) {
+        createForm.create(createProfileData)
     }
 }

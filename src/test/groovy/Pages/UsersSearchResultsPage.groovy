@@ -1,7 +1,6 @@
 package Pages
 
 import Modules.AlertsModule
-import Modules.FooterModule
 import Modules.HeaderLoggedModule
 import Modules.UsersSearchResultsModule
 import geb.Page
@@ -21,6 +20,5 @@ class UsersSearchResultsPage extends Page {
         resultsTable { $("table") }
         searchResults { resultsTable.$("tbody tr").moduleList(UsersSearchResultsModule) }
         pageButtons { resultsTable.$("tfoot").$("a", text: iContains(it)) }
-        footer { module FooterModule }
     }
 }
