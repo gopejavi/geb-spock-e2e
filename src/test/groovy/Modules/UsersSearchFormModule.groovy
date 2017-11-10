@@ -9,6 +9,7 @@ class UsersSearchFormModule extends Module {
 
         nameInput { form.$("#name") }
         emailInput { form.$("#email") }
+        profileSelect { form.$("#profilesId") }
 
         searchButton { form.$(".btn", value: "Search") }
     }
@@ -16,6 +17,7 @@ class UsersSearchFormModule extends Module {
     def search(userSearchData) {
         nameInput = userSearchData.name
         emailInput = userSearchData.email
+        profileSelect = userSearchData.profile
         searchButton.click()
     }
 }

@@ -21,11 +21,13 @@ class Const {
                         PASS_DOESNT_MATCH = "Password doesn't match confirmation",
                         PASS_CHANGED = "Your password was successfully changed",
                         ACCEPT_TERMS = "Terms and conditions must be accepted",
-                        WRONG_EMAIL_PASS = "Wrong email/password combination",
-                        DONT_HAVE_ACCESS = "You don't have access to this module: private",
-                        EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails.",
-                        DIDNT_FIND_USERS = "The search did not find any users",
-                        USER_CREATED = "User was created successfully",
-                        PROFILE_NAME_REQUIRED = "name is required",
-                        PROFILE_CREATED = "Profile was created successfully"
+            WRONG_EMAIL_PASS = "Wrong email/password combination",
+            DONT_HAVE_ACCESS = "You don't have access to this module: private",
+            EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails.",
+            DIDNT_FIND_USERS = "The search did not find any users",
+            USER_CREATED = "User was created successfully",
+            PROFILE_NAME_REQUIRED = "name is required",
+            PROFILE_CREATED = "Profile was created successfully",
+            DIDNT_FIND_PROFILES = "The search did not find any profiles",
+            PROFILE_REQUIRED = "profilesId is required"
 }

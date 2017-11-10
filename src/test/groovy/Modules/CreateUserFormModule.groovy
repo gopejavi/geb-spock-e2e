@@ -17,7 +17,7 @@ class CreateUserFormModule extends Module {
     def create(createUserData) {
         nameInput = createUserData.name
         emailInput = createUserData.email
-        profileSelect = "Administrators"//for now. Later: userCreateData.profile
+        profileSelect = createUserData.profile
         createButton.click()
     }
 }

@@ -6,6 +6,6 @@ import groovy.transform.TupleConstructor
 @AutoClone
 @TupleConstructor
 class ChangePasswordData {
-    String password
-    String confirmPassword
+    String password,
+           confirmPassword
 }

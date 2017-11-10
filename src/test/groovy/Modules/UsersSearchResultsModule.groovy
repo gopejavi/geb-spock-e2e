@@ -9,5 +9,6 @@ class UsersSearchResultsModule extends Module {
         id { cell(0).text().toInteger() }
         name { cell(1).text() }
         email { cell(2).text() }
+        profile { cell(3).text() }
     }
 }

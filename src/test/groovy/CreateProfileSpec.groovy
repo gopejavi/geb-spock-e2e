@@ -11,8 +11,10 @@ As a User Administrator
 I want to manage the permissions of users
 So each user only has access to specific actions
 """)
-@Issue("https://trello.com/c/e3BUYACf")
-@See("https://trello.com/c/xURLGV60")
+@Issue([
+        "https://trello.com/c/e3BUYACf",
+        "https://trello.com/c/xURLGV60"
+])
 @Stepwise
 class CreateProfileSpec extends CommonLoggedSpecFeatures {
 
