@@ -48,7 +48,7 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
         where:
         invalidCreateUserData                                    | errorMessage
         new CreateUserData("Doge", "")                           | Const.EMAIL_REQUIRED
-        new CreateUserData("", "suchEmail@muchValid.wow")        | Const.NAME_REQUIRED
+        new CreateUserData("", "suchEmail@muchValid.wow")        | Const.USER_NAME_REQUIRED
         new CreateUserData("Doge", "soInvalidVeryVeryIncorrect") | Const.EMAIL_NOT_VALID
         new CreateUserData("Xavier", "gopejavi@mailinator.com")  | Const.EMAIL_ALREADY_REGISTERED
     }

@@ -1,6 +1,7 @@
 package Pages
 
 import Modules.AlertsModule
+import Modules.CreateProfileFormModule
 import Modules.HeaderLoggedModule
 import geb.Page
 

@@ -11,7 +11,7 @@ class Const {
             "com.mysql.cj.jdbc.Driver"
     )
     // ALERT MESSAGES
-    static final String NAME_REQUIRED = "The name is required",
+    static final String USER_NAME_REQUIRED = "The name is required",
                         EMAIL_REQUIRED = "The e-mail is required",
                         EMAIL_NOT_VALID = "The e-mail is not valid",
                         EMAIL_ALREADY_REGISTERED = "The email is already registered",
@@ -25,5 +25,7 @@ class Const {
                         DONT_HAVE_ACCESS = "You don't have access to this module: private",
                         EMAILS_ARE_DISABLED = "Emails are currently disabled. Change config key \"useMail\" to true to enable emails.",
                         DIDNT_FIND_USERS = "The search did not find any users",
-                        USER_CREATED = "User was created successfully"
+                        USER_CREATED = "User was created successfully",
+                        PROFILE_NAME_REQUIRED = "name is required",
+                        PROFILE_CREATED = "Profile was created successfully"
 }

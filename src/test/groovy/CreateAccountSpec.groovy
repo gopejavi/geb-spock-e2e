@@ -75,7 +75,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         signupForm.signupButton.click()
 
         then: "I see error messages under each form input"
-        assert signupForm.nameInputErrors.text() == Const.NAME_REQUIRED
+        assert signupForm.nameInputErrors.text() == Const.USER_NAME_REQUIRED
         assert signupForm.emailInputErrors.text() == Const.EMAIL_REQUIRED
         assert signupForm.passwordInputErrors.text() == Const.PASS_REQUIRED
         assert signupForm.confirmPasswordInputErrors.text() == Const.CONFIRM_PASS_REQUIRED
