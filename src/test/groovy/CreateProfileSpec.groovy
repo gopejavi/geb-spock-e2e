@@ -68,24 +68,4 @@ class CreateProfileSpec extends CommonLoggedSpecFeatures {
         then: "I am at Profiles page"
         at ProfilesPage
     }
-/*
-    def "Should find the new user USERNAME when search by name #userSearchData.name or email #userSearchData.email"() {
-        given: "I am at Users Page"
-        to UsersPage //stepwise, but looping with "where"
-
-        when: "I search the new user by of its name or email"
-        search(userSearchData)
-
-        then: "I see one results containing info form the new user"
-        at UsersSearchResultsPage
-        assert searchResults.size() == numResults
-        assert searchResults*.name.any { it == createdUser.name }
-        assert searchResults*.email.any { it == createdUser.email }
-
-        where:
-        createdUser        | userSearchData                                  | numResults
-        createUserDoge     | new UserSearchData(createUserDoge.name, "")     | 1
-        createUserGopejavi | new UserSearchData(createUserGopejavi.name, "") | 2
-        createUserUgc      | new UserSearchData("", createUserUgc.email)     | 1
-    }*/
 }

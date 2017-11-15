@@ -55,7 +55,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         true //Note: not implemented as email sending is off.
 
         cleanup:
-        VokuroDatabase.restoreOriginal()
+        VokuroDatabase.restoreCommon()
 
         where:
         validSignupData << [

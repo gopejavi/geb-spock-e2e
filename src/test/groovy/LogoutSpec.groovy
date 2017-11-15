@@ -45,6 +45,6 @@ class LogoutSpec extends CommonSpecFeatures {
 
         then: "I stay at Home page, showing error below the header"
         at HomePage
-        assert alerts.info*.text().any { it == Const.DONT_HAVE_ACCESS }
+        assert alerts.info*.text().any { it == Const.DONT_HAVE_ACCESS + Const.PRIVATE_MODULES }
     }
 }

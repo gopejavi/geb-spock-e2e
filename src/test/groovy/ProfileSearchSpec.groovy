@@ -29,7 +29,7 @@ class ProfileSearchSpec extends CreateProfileSpec { // as we want also to check 
 
         then: "I see all profiles"
         at ProfilesSearchResultsPage
-        assert searchResults*.name == ["Administrators", "Users", "Read-Only", "All Access", "Some Access"]
+        assert searchResults*.name == ["Administrators", "Users", "Read-Only", "Test-Profile", "All Access", "Some Access"]
     }
 
     def "Should be able to filter profiles: for name '#nameFilter' I see '#numResults'"() {
@@ -47,7 +47,7 @@ class ProfileSearchSpec extends CreateProfileSpec { // as we want also to check 
         where:
         nameFilter | numResults
         "admin"    | 1
-        "-"        | 1
+        "-"        | 2
         "ACCESS"   | 2
     }
 

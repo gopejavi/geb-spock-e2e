@@ -57,7 +57,7 @@ class UserSearchSpec extends CommonLoggedSpecFeatures {
         numPage | numResults | firstUserIdAtPage | lastUserIdAtPage
         1       | 10         | 1                 | 10
         2       | 10         | 11                | 20
-        3       | 1          | 21                | 21
+        3       | 2          | 21                | 22
     }
 
     def "Should have links to #page page for faster navigation"() {
@@ -78,7 +78,7 @@ class UserSearchSpec extends CommonLoggedSpecFeatures {
         where:
         page    | numResults | firstUserIdAtPage | lastUserIdAtPage
         "first" | 10         | 1                 | 10
-        "last"  | 1          | 21                | 21
+        "last"  | 2          | 21                | 22
     }
 
     def "Should filter by users: by name '#nameFilter', email '#emailFilter' and profile '#profileFilter' and show #numResults results"() {
@@ -108,7 +108,7 @@ class UserSearchSpec extends CommonLoggedSpecFeatures {
         "gopejavi" | "mailinator"              | ""               | 1
         ""         | "mailinator"              | "Administrators" | 1
         "er"       | "ik"                      | ""               | 1
-        "g"        | "@"                       | ""               | 3
+        "g"        | "@"                       | ""               | 4
         ""         | ""                        | "Users"          | 1
     }
 

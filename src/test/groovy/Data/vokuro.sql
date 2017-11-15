@@ -104,7 +104,19 @@ INSERT INTO `permissions` (`id`, `profilesId`, `resource`, `action`) VALUES
 (19, 2, 'users', 'edit'),
 (20, 2, 'users', 'create'),
 (21, 2, 'profiles', 'index'),
-(22, 2, 'profiles', 'search');
+(22, 2, 'profiles', 'search'),
+(23, 4, 'users', 'index'),
+(24, 4, 'users', 'search'),
+(25, 4, 'users', 'edit'),
+(26, 4, 'users', 'create'),
+(27, 4, 'users', 'delete'),
+(28, 4, 'users', 'changePassword'),
+(29, 4, 'profiles', 'index'),
+(30, 4, 'profiles', 'search'),
+(31, 4, 'profiles', 'edit'),
+(32, 4, 'profiles', 'create'),
+(33, 4, 'profiles', 'delete'),
+(34, 4, 'permissions', 'index');
 
 -- --------------------------------------------------------
 
@@ -128,7 +140,8 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 INSERT INTO `profiles` (`id`, `name`, `active`) VALUES
 (1, 'Administrators', 'Y'),
 (2, 'Users', 'Y'),
-(3, 'Read-Only', 'Y');
+(3, 'Read-Only', 'Y'),
+(4, 'Test-Profile', 'Y');
 
 -- --------------------------------------------------------
 
@@ -227,4 +240,5 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `mustChangePassword`, `p
 (18, 'm', 'm@mailinator.com', '$2y$08$eVl2MnZCL09vVElnSHdyTe6Qd.TYR4WmkrYOkh3CzNS6UzwkZJcA2', 'Y', '3', 'N', 'N', 'Y'),
 (19, 'n', 'n@mailinator.com', '$2y$08$UFBFOWtVaFhXR0o3bGh1ROyg35nxpqSarbXrtEXwRoRjrDeDb3x3i', 'Y', '3', 'N', 'N', 'Y'),
 (20, 'o', 'o@mailinator.com', '$2y$08$VW9Cd255UHhKQzNBSzZ6ZeQ5C5ntbsNEEgO5Rnum1/7ltx4zuFYgS', 'Y', '3', 'N', 'N', 'Y'),
-(21, 'p', 'p@mailinator.com', '$2y$08$UUNtOE9ROXN1T0VicWd4Vu7DhQfFemkm9c/NhyS4Y8XJZjJ4ICoSa', 'Y', '3', 'N', 'N', 'Y');
+(21, 'p', 'p@mailinator.com', '$2y$08$UUNtOE9ROXN1T0VicWd4Vu7DhQfFemkm9c/NhyS4Y8XJZjJ4ICoSa', 'Y', '3', 'N', 'N', 'Y'),
+(22, 'Gordon', 'freeman@mailinator.com', '$2y$08$TEF6V2JML2xML3oyZHJUQukfsyS3OY2rpu.5VfAAaYunUJmpovYvW', 'N', '4', 'N', 'N', 'Y');
