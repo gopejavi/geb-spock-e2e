@@ -1,7 +1,6 @@
 package Pages
 
 import Modules.AlertsModule
-import Modules.FooterModule
 import Modules.HeaderLoggedModule
 import Modules.UsersSearchFormModule
 import geb.Page
@@ -21,7 +20,6 @@ class UsersPage extends Page {
         createUserButton { $(".btn", href: "/users/create") }
         mainPanelTitle { $("h2") }
         searchForm { module UsersSearchFormModule }
-        footer { module FooterModule }
     }
 
     def search(userSearchData) {

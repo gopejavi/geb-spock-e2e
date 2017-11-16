@@ -5,8 +5,6 @@ import groovy.transform.TupleConstructor
 
 @AutoClone
 @TupleConstructor
-class UserSearchData {
-    String name,
-           email,
-           profile
+class ProfileSearchData {
+    String name
 }

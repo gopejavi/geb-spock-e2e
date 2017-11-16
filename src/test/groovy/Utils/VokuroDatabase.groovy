@@ -2,7 +2,7 @@ package Utils
 
 class VokuroDatabase {
 
-    static restoreOriginal() {
+    static restoreCommon() {
         print "Restoring Vokuro's DB..."
         Const.MYSQL_CONNECTION.execute(new File('src/test/groovy/Data/vokuro.sql').text)
         print " Done."

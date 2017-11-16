@@ -6,9 +6,9 @@ import groovy.transform.TupleConstructor
 @AutoClone
 @TupleConstructor
 class SignupData {
-    String name
-    String email
-    String password
-    String confirmPassword
+    String name,
+           email,
+           password,
+           confirmPassword
     boolean agreeTermsConditions
 }

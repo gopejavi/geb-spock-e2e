@@ -6,6 +6,6 @@ import groovy.transform.TupleConstructor
 @AutoClone
 @TupleConstructor
 class LoginData {
-    String email
-    String password
+    String email,
+           password
 }

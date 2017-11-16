@@ -7,24 +7,29 @@ import Utils.CommonLoggedSpecFeatures
 import Utils.Const
 import spock.lang.*
 
+import static Utils.DataObjectsHelper.createDataFrom
+
 @Title("US12: Create Users")
 @Narrative("""
 As a User administrator
 I want to create users
 So more people will managing this site
 """)
-@Issue("https://trello.com/c/LTebUWzi")
+@Issue([
+        "https://trello.com/c/LTebUWzi",
+        "https://trello.com/c/xURLGV60"
+])
 @Stepwise
 // Note the difference between this form and Sign Up form, being similar this is more efficient,
 // because the stepwise and input invalid fields checking using better the "where".
 class CreateUserSpec extends CommonLoggedSpecFeatures {
 
     @Shared
-            createUserDoge = new CreateUserData("Doge", "suchEmail@muchValid.wow"),
-            createUserGopejavi = new CreateUserData("gopejavi", "nameCan@Already.exist"),
-            createUserUgc = new CreateUserData("UGC", "ugc@absolutely.beer")
+            createUserDoge = new CreateUserData("Doge", "suchEmail@muchValid.wow", "Administrators"),
+            createUserGopejavi = new CreateUserData("gopejavi", "nameCan@Already.exist", "Users"),
+            createUserUgc = new CreateUserData("UGC", "ugc@absolutely.beer", "Read-Only")
 
-    def "Should navigate to Create Usert Page from Users Page"() {
+    def "Should navigate to Create User Page from Users Page"() {
         given: "I am at Users page"
         to UsersPage
 
@@ -35,7 +40,7 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
         at CreateUserPage
     }
 
-    def "Should not create a user with #invalidCreateUserData.name and #invalidCreateUserData.email"() {
+    def "Should not create a user with name '#invalidCreateUserData.name', email '#invalidCreateUserData.email' and profile '#invalidCreateUserData.profile'"() {
         given: "I am at Create User Page"
         true //stepwise
 
@@ -46,14 +51,15 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
         assert alerts.error*.text().any { it == errorMessage }
 
         where:
-        invalidCreateUserData                                    | errorMessage
-        new CreateUserData("Doge", "")                           | Const.EMAIL_REQUIRED
-        new CreateUserData("", "suchEmail@muchValid.wow")        | Const.NAME_REQUIRED
-        new CreateUserData("Doge", "soInvalidVeryVeryIncorrect") | Const.EMAIL_NOT_VALID
-        new CreateUserData("Xavier", "gopejavi@mailinator.com")  | Const.EMAIL_ALREADY_REGISTERED
+        invalidCreateUserData                                              | errorMessage
+        createDataFrom(createUserDoge, [name: ""])                         | Const.USER_NAME_REQUIRED
+        createDataFrom(createUserDoge, [email: ""])                        | Const.EMAIL_REQUIRED
+        createDataFrom(createUserDoge, [email: "VeryVeryIncorrect"])       | Const.EMAIL_NOT_VALID
+        createDataFrom(createUserDoge, [email: "gopejavi@mailinator.com"]) | Const.EMAIL_ALREADY_REGISTERED
+        createDataFrom(createUserDoge, [profile: "..."])                   | Const.PROFILE_REQUIRED
     }
 
-    def "Should create a user when all fields are valid like #createUserData.name and #createUserData.email, and see success message"() {
+    def "Should create a user with valid name '#createUserData.name', email '#createUserData.email' and profile '#createUserData.profile' and see success message"() {
         given: "I am at Create User Page"
         true //stepwise
 
@@ -78,7 +84,7 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
         at UsersPage
     }
 
-    def "Should find the new user USERNAME when search by name #userSearchData.name or email #userSearchData.email"() {
+    def "Should find new user #createdUser.name when searching by name '#userSearchData.name', email '#userSearchData.email' or profile '#userSearchData.profile'"() {
         given: "I am at Users Page"
         to UsersPage //stepwise, but looping with "where"
 
@@ -88,13 +94,19 @@ class CreateUserSpec extends CommonLoggedSpecFeatures {
         then: "I see one results containing info form the new user"
         at UsersSearchResultsPage
         assert searchResults.size() == numResults
-        assert searchResults*.name.any { it == createdUser.name }
-        assert searchResults*.email.any { it == createdUser.email }
+        assert searchResults.any {
+            it.name == createdUser.name && it.email == createdUser.email && it.profile == createdUser.profile
+        }
 
         where:
-        createdUser        | userSearchData                                  | numResults
-        createUserDoge     | new UserSearchData(createUserDoge.name, "")     | 1
-        createUserGopejavi | new UserSearchData(createUserGopejavi.name, "") | 2
-        createUserUgc      | new UserSearchData("", createUserUgc.email)     | 1
+        createdUser        | userSearchData                                                                        | numResults
+        createUserDoge     | new UserSearchData(createUserDoge.name, "", "")                                       | 1
+        createUserGopejavi | new UserSearchData(createUserGopejavi.name, "", "")                                   | 2
+        createUserUgc      | new UserSearchData("", createUserUgc.email, "")                                       | 1
+        createUserDoge     | new UserSearchData(createUserDoge.name, "", createUserDoge.profile)                   | 1
+        createUserDoge     | new UserSearchData("", "", createUserDoge.profile)                                    | 5
+        createUserUgc      | new UserSearchData("", createUserUgc.email, createUserUgc.profile)                    | 1
+        createUserGopejavi | new UserSearchData(createUserGopejavi.name, "", createUserGopejavi.profile)           | 1
+        createUserDoge     | new UserSearchData(createUserDoge.name, createUserDoge.email, createUserDoge.profile) | 1
     }
 }
