@@ -1,7 +1,7 @@
 version: 2
 jobs:
 
-"prepare_testing_machine":
+prepare_testing_machine:
     docker:
       - image: gopejavi/geb-spock-e2e
     environment:
@@ -13,7 +13,7 @@ jobs:
           keys:
             - gradle-home
 
-"prepare_app":
+prepare_app:
     docker:
       - image: gopejavi/vokuro
 
@@ -33,12 +33,12 @@ jobs:
           - .gradle-home
 
 workflows:
-version: 2
-build:
-jobs:
-- "prepare_testing_machine"
-- "prepare_app"
-- "test":
-  requires:
-    - "prepare_testing_machine"
-    - "prepare_app"
+  version: 2
+  build:
+    jobs:
+    - prepare_testing_machine
+    - prepare_app
+    - test:
+      requires:
+        - prepare_testing_machine
+        - prepare_app
