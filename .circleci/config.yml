@@ -16,6 +16,8 @@ jobs:
   prepare_app:
       docker:
         - image: gopejavi/vokuro
+      steps:
+        - checkout
 
   test:
       steps:
