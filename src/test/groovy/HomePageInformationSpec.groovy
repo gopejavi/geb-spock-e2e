@@ -66,7 +66,7 @@ class HomePageInformationSpec extends CommonSpecFeatures {
         "Important Stuff"    | "Cum sociis natoque penatibus"
     }
 
-    def "Should see correct informative section three called #expectedSectionTitle containing several address info"() {
+    def "Should see correct informative section three called #expectedAddressesSectionTitle containing several address info"() {
         given: "I am at Home page"
         to HomePage
 

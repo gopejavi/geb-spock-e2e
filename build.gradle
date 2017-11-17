@@ -37,7 +37,7 @@ dependencies {
     }
     testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
 
-    // To interact with Selects and other.
+    // To interact with Selects, Checkboxes and other.
     testCompile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 
     // Drivers

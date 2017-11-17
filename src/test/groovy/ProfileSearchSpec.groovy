@@ -1,6 +1,7 @@
 import DataObjects.ProfileSearchData
 import Pages.ProfilesPage
 import Pages.ProfilesSearchResultsPage
+import Utils.CommonLoggedSpecFeatures
 import Utils.Const
 import spock.lang.Issue
 import spock.lang.Narrative
@@ -18,18 +19,18 @@ So each user only has access to specific actions
         "https://trello.com/c/xURLGV60"
 ])
 @Stepwise
-class ProfileSearchSpec extends CreateProfileSpec { // as we want also to check the new created profiles
+class ProfileSearchSpec extends CommonLoggedSpecFeatures {
 
     def "Should list all kind of profiles when searching without filters"() {
         given: "I am at Profiles Page"
-        true // We are there from CreateProfileSpec
+        to ProfilesPage
 
         when: "I search with no filters"
         search(new ProfileSearchData(""))
 
         then: "I see all profiles"
         at ProfilesSearchResultsPage
-        assert searchResults*.name == ["Administrators", "Users", "Read-Only", "Test-Profile", "All Access", "Some Access"]
+        assert searchResults*.name == ["Administrators", "Users", "Read-Only", "Test-Profile"]
     }
 
     def "Should be able to filter profiles: for name '#nameFilter' I see '#numResults'"() {
@@ -48,10 +49,9 @@ class ProfileSearchSpec extends CreateProfileSpec { // as we want also to check 
         nameFilter | numResults
         "admin"    | 1
         "-"        | 2
-        "ACCESS"   | 2
     }
 
-    def "Should not return any profile and show alert when any filter matches"() {
+    def "Should not return any profile and show alert when any filter matches, like name '#nameFilter'"() {
         given: "I am at Users Page"
         to ProfilesPage
 

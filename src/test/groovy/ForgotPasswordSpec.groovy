@@ -26,7 +26,7 @@ class ForgotPasswordSpec extends CommonSpecFeatures {
         at ForgotPasswordPage
     }
 
-    def "Considering email sending off, it should show a warning about it when trying to restore password"() {
+    def "Should show a warning about email sending being off, when trying to restore password, with email '#email'"() {
         given: "I am at forgot Password page"
         to ForgotPasswordPage
 
