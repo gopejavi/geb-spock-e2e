@@ -48,23 +48,23 @@ class PermissionsSpec extends MultiBrowserGebSpec {
         adminSession.search("Test-Profile")
 
         then: "I see all possible permissions"
-        assert adminSession.permissionsForm.permissions*.description.every { it in permissionNames }
-
-        where:
-        permissionNames = ["Access users",
-                           "Search users",
-                           "Edit users",
-                           "Create users",
-                           "Delete users",
-                           "Change password users",
-                           "Access profiles",
-                           "Search profiles",
-                           "Edit profiles",
-                           "Create profiles",
-                           "Delete profiles",
-                           "Access permissions"]
+        assert adminSession.permissionsForm.permissions*.description.every {
+            it in ["Access users",
+                   "Search users",
+                   "Edit users",
+                   "Create users",
+                   "Delete users",
+                   "Change password users",
+                   "Access profiles",
+                   "Search profiles",
+                   "Edit profiles",
+                   "Create profiles",
+                   "Delete profiles",
+                   "Access permissions"]
+        }
     }
 
+    @Unroll
     def "Should not let a user access to '#pageChangingPermission.url' if his/her profile has disabled permissions for that page"() {
 
         given: "A user with all permissions can access a particular internal page, then leaves it"

@@ -101,7 +101,7 @@ class CreateAccountSpec extends CommonSpecFeatures {
         ]
     }
 
-    def "Should not create account if password is invalid -less than 8 chars-, like #validSignupDataExceptPassword"() {
+    def "Should not create account if password is invalid -less than 8 chars-, like #validSignupDataExceptPassword.password"() {
         given: "I am at Create Account page"
         to CreateAccountPage
 
@@ -142,13 +142,10 @@ class CreateAccountSpec extends CommonSpecFeatures {
         to CreateAccountPage
 
         when: "I sign up with valid data but not accepting Terms and Conditions"
-        signup(validSignupDataButDontAgreeTerms)
+        signup(createDataFrom(sharedValidSignupData, [agreeTermsConditions: false]))
 
         then: "I see an error message under terms agreement checkbox"
         assert signupForm.termsCheckboxErrors.text() == Const.ACCEPT_TERMS
-
-        where:
-        validSignupDataButDontAgreeTerms = createDataFrom(sharedValidSignupData, [agreeTermsConditions: false])
     }
 
     def "Should not create account if user already exists, like #validSignupDataWithExistingMail.email"() {

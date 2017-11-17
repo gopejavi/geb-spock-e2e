@@ -34,18 +34,21 @@ class LoginSpec extends CommonSpecFeatures {
         at LoginPage
     }
 
-    def "Registered user should log in successfully with e-mail #sharedValidLoginData.email, password #sharedValidLoginData.password"() {
+    def "Registered user should log in successfully with e-mail #validLoginData.email, password #validLoginData.password"() {
         given: "I am at Log In page"
         to LoginPage
 
         when: "I log in with valid data"
-        login(sharedValidLoginData)
+        login(validLoginData)
 
         then: "I am at Users Page"
         at UsersPage
+
+        where: //just for reports
+        validLoginData = sharedValidLoginData
     }
 
-    def "Should not log in without email"() {
+    def "Should not log in with email '#emptyMailValidPassword.email'"() {
         given: "I am at Log In page"
         to LoginPage
 
@@ -79,7 +82,7 @@ class LoginSpec extends CommonSpecFeatures {
         ]
     }
 
-    def "I should not be able to log in without password"() {
+    def "I should not be able to log in with password '#validLoginDataExceptPassword.password'"() {
         given: "I am at Log In page"
         to LoginPage
 
