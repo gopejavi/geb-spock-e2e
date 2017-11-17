@@ -48,9 +48,7 @@ dependencies {
     testCompile 'info.solidsoft.spock:spock-global-unroll:0.5.1'
 
     // Extended Reports
-    testCompile('com.athaydes:spock-reports:1.3.2') {
-        transitive = false // this avoids affecting your version of Groovy/Spock
-    }
+    testCompile('com.athaydes:spock-reports:1.3.2') { transitive = false }
     testCompile 'org.slf4j:slf4j-api:1.7.13'
     testCompile 'org.slf4j:slf4j-simple:1.7.13'
 
@@ -76,6 +74,7 @@ drivers.each { driver ->
 test {
     dependsOn drivers.collect { tasks["${it}Test"] }
     enabled = false
+    systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
 }
 
 tasks.withType(Test) {

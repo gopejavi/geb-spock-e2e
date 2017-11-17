@@ -64,6 +64,7 @@ class PermissionsSpec extends MultiBrowserGebSpec {
         }
     }
 
+    @Unroll
     def "Should not let a user access to '#pageChangingPermission.url' if his/her profile has disabled permissions for that page"() {
 
         given: "A user with all permissions can access a particular internal page, then leaves it"
