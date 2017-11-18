@@ -15,6 +15,9 @@ ext {
         seleniumVersion = '3.7.1'
         chromeDriverVersion = '2.33'
         geckoDriverVersion = '0.19.0'
+        seleniumVersion = '3.6.0'
+        chromeDriverVersion = '2.32'
+        geckoDriverVersion = '0.18.0'
     }
 
     baseUrl = project.hasProperty('baseUrl') ? project.getProperty('baseUrl') : ''
@@ -63,6 +66,8 @@ webdriverBinaries {
 
 drivers.each { driver ->
     task "${driver}Test"(type: Test) {
+        group JavaBasePlugin.VERIFICATION_GROUP
+
         outputs.upToDateWhen { false }  // Always run tests
 
 
