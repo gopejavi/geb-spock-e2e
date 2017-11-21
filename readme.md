@@ -1,10 +1,9 @@
-# Example Geb and Gradle Project
-
+# Example Spock-Geb E2E tests
 [![CircleCI](https://circleci.com/gh/gopejavi/geb-spock-e2e.svg?style=svg)](https://circleci.com/gh/gopejavi/geb-spock-e2e)
 
 ## Description
 
-This is an example of E2E acceptance tests, done with the stack Spock-Geb-Groovy over a Phalcon Framework example applicaton.
+This is an example of E2E acceptance tests, done with the stack Spock-Geb (Groovy) over a Phalcon Framework example applicaton.
 For this example project Trello was used to simulate sprints and User Stories with Acceptante Criteria.
 Also, CircleCI is used to pass the builds. Two Docker containers are also used: one for the app to test, another for the testing framework (this project).
 
