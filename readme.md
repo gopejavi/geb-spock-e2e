@@ -16,6 +16,7 @@ Also, CircleCI is used to pass the builds. Two Docker containers are also used: 
 4. Clone this project (tests can be launched locally) or download the Docker containing it and ssh into it.
 5. Run the tests. In the root of the project, `.../geb-spock-e2e`: 
 `./gradlew -P baseUrl=http://VOKURO_IP chromeTest` where YOUR_IP is the IP where you see your Vokuro web. It is important to specify the IP as the fixtures for tests need to be reset and Mysql will need that data.
+6. After the tests are run, you can find the reports in `.../geb-spock-e2e/build/spock-reports/index.html`
 
 You can use chromeTest, firefoxTest or chromeHeadlessTest. This last one will launch the tests on Chrome without rendering the windows on screen. Very useful for continuous integration based on Linux distros without GUI.
 
