@@ -12,9 +12,7 @@ Also, CircleCI is used to pass the builds. Two Docker containers are also used: 
 
 1. If you don't have it already, install Docker.
 2. With Docker installed (or from the Docker Terminal in Windows) run:
-`docker run -p 80:80 -p 3306:3306 --name vokuro_container gopejavi/vokuro`
-···You can close it safely with Ctrl+C, it will be still up.
-3. Be sure where the Vokuro project is running. Try 127.0.0.1 or 192.168.99.100. You will see a web named Vokuro.
+`docker run -p 80:80 -p 3306:3306 --name vokuro_container gopejavi/vokuro`. Be sure where the Vokuro project is running. Try 127.0.0.1 or 192.168.99.100. You will see a web named Vokuro. After the server is up you can close it safely with Ctrl+C, it will be still up.
 4. Clone this project (tests can be launched locally) or download the Docker containing it and ssh into it.
 5. Run the tests. In the root of the project, `.../geb-spock-e2e`: 
 `./gradlew -P baseUrl=http://VOKURO_IP chromeTest` where YOUR_IP is the IP where you see your Vokuro web. It is important to specify the IP as the fixtures for tests need to be reset and Mysql will need that data.
