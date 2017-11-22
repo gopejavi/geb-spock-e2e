@@ -17,7 +17,7 @@ Also, CircleCI is used to pass the builds. Two Docker containers are also used: 
 `./gradlew -P baseUrl=http://VOKURO_IP BROWSER_TEST` where VOKURO_IP is the IP where you see your Vokuro web and BROWSER_TEST is `chromeTest`, `firefoxTest` or `chromeHeadlessTest`. This last one will launch the tests on Chrome without rendering the windows on screen. Very useful for continuous integration based on Linux distros without GUI.
 6. After the tests are run, you can find the reports in `.../geb-spock-e2e/build/spock-reports/index.html`
 
-You can also run particular tests by name or by definiction, using for example:
+You can also run particular tests by name or by definition, using for example:
 `./gradlew --info -P baseUrl=http://VOKURO_IP chromeTest --tests *CreateUser*`
 This will run, providing more info (--info) about the state of the execution (useful if any error happens), and will execute only the files containing CreateUser with any set of characters before and after. It also searches in all files for every scenario defined in every file and it will execute scenarios from other files with the same criteria.
 
