@@ -19,7 +19,7 @@ class FooterSpec extends CommonSpecFeatures {
             expectedPrivacyLinkText = "Privacy Policy",
             expectedTermsLinkText = "Terms"
 
-    def "Should have a header in Home page"() {
+    def "Should have a footer in Home page"() {
         given: "I am at Home page"
         to HomePage
 
@@ -34,7 +34,7 @@ class FooterSpec extends CommonSpecFeatures {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "Should have a header in About page"() {
+    def "Should have a footer in About page"() {
         given: "I am at About page"
         to AboutPage
 
@@ -49,7 +49,7 @@ class FooterSpec extends CommonSpecFeatures {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "Should have a header in Privacy Policy page"() {
+    def "Should have a footer in Privacy Policy page"() {
         given: "I am at Privacy Policy page"
         to PrivacyPolicyPage
 
@@ -64,7 +64,7 @@ class FooterSpec extends CommonSpecFeatures {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "Should have a header in Terms page"() {
+    def "Should have a footer in Terms page"() {
         given: "I am at Terms page"
         to TermsPage
 
@@ -79,7 +79,7 @@ class FooterSpec extends CommonSpecFeatures {
         assert footer.termsLink.text() == expectedTermsLinkText
     }
 
-    def "Should have a header in Create Account page"() {
+    def "Should have a footer in Create Account page"() {
         given: "I am at Create Account page"
         to CreateAccountPage
 
