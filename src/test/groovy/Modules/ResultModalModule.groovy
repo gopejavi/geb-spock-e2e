@@ -2,7 +2,7 @@ package Modules
 
 import geb.Module
 
-class FooterModule extends Module {
+class ResultModalModule extends Module {
 
     static content = {
         footer { $("footer") }

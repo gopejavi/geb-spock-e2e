@@ -16,15 +16,39 @@ class ShopDemoPage extends Page {
     static content = {
         header { module HeaderModule }
         payWithAplazameButton { $('.pay-with-aplazame') }
-        aplazameContainer(page: AplazameEmbeddedPage) { $('#aplazame-checkout-iframe') }
+        aplazameCheckout(page: AplazameCheckoutPage) { $('#aplazame-checkout-iframe') }
         footer { module FooterModule }
     }
 
     def payWithAplazame(nif, card) {
         payWithAplazameButton.click()
-        waitFor { aplazameContainer.present }
-        withFrame(aplazameContainer) {
+        waitFor { aplazameCheckout.present }
+        withFrame(aplazameCheckout) {
             doAllPayment(nif, card)
+        }
+    }
+
+    def warningIsDisplayed() {
+        withFrame(aplazameCheckout) {
+            warningDisplayed()
+        }
+    }
+
+    def noFundsHasText(title, description) {
+        withFrame(aplazameCheckout) {
+            noFundsText(title, description)
+        }
+    }
+
+    def buttonDismissIsDisplayed() {
+        withFrame(aplazameCheckout) {
+            buttonDismissDisplayed()
+        }
+    }
+
+    def buttonBackToShopIsDisplayed() {
+        withFrame(aplazameCheckout) {
+            buttonBackToShopDisplayed()
         }
     }
 }

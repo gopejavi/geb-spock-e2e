@@ -5,7 +5,7 @@ import groovy.transform.TupleConstructor
 
 @AutoClone
 @TupleConstructor
-class CardData {
+class CreditCardData {
     String number,
            expiration,
            cvv
