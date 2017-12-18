@@ -6,7 +6,6 @@ class FooterModule extends Module {
 
     static content = {
         footer { $("footer") }
-        privacyLink { footer.$("a", href: "/privacy") }
-        termsLink { footer.$("a", href: "/terms") }
+        //... implement this repeating component (and others) in the same way than header.
     }
 }
