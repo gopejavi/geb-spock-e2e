@@ -1,5 +1,6 @@
 import DataObjects.CreditCardData
 import Pages.ShopDemoPage
+import Pages.ShopDemoSuccessPage
 import Utils.Const
 import geb.spock.GebReportingSpec
 import spock.lang.Issue
@@ -25,9 +26,9 @@ So I can finalize my awesome purchase
 class PaySuccessSpec extends GebReportingSpec {
 
     @Shared
-    CreditCardData successCard = new CreditCardData("4111111111111111", "1118", "000")
+    CreditCardData successCard = new CreditCardData("4111111111111111", "11/18", "000")
 
-    /*def "Should accept the payment from client with NIF #nif and card number #card.number"() {
+    def "Should accept the payment from client with NIF #nif and card number #card.number"() {
         given: "The shopping cart checkout page is ready"
         to ShopDemoPage
 
@@ -41,7 +42,7 @@ class PaySuccessSpec extends GebReportingSpec {
         where: //like "examples" in pure Gherkin
         nif          | card
         "99999992 V" | successCard
-    }*/
+    }
 
     def "Should not accept the payment from client with NIF #nif and card with no funds and number #card.number"() {
         given: "The shopping cart checkout page is ready"

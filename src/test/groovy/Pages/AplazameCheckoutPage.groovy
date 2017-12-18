@@ -11,12 +11,11 @@ class AplazameCheckoutPage extends Page {
         modalCheckout { $("html").$(".modal-checkout") }
         nextCheckoutStepButton { modalCheckout.$("button", "ng-click": "checkout.next()") }
         nifInput { modalCheckout.$("input", name: "document_id") }
-        newCreditCard { modalCheckout.$("input", name: "payment_method").lastElement() }
-        paymentMethod { modalCheckout.$(".payment_method") }
+        paymentMethod { modalCheckout.$("input", name: "payment_method") }
         smsCode { modalCheckout.$("#sandbox").$("span", 1) }
         smsCodeInput { modalCheckout.$("#OtpSecureInput") }
 
-        checkoutResult { module AplazameResultModule }
+        checkoutResult { $("html").$(".modal-result").module(AplazameResultModule) }
     }
 
     def doAllPayment(nif, card) {
@@ -51,12 +50,13 @@ class AplazameCheckoutPage extends Page {
     }
 
     def selectNewCreditCard() {
-        sleep(500) //Should not use but I could not do it in other way.
-        waitFor(1.5, {
-            if (newCreditCard.displayed)
+        sleep(750) //Should not use but I could not do it in other way.
+        waitFor(2, {
+            def newCreditCard = paymentMethod.lastElement()
+            if (newCreditCard.displayed) {
                 newCreditCard.click()
-            else
-                sleep(1000)
+            } else
+                sleep(1500)
             true
         })
     }
@@ -72,19 +72,23 @@ class AplazameCheckoutPage extends Page {
     }
 
     def warningDisplayed() {
-        checkoutResult.warningDisplayed()
+        waitFor({ checkoutResult.displayed })
+        return checkoutResult.warningDisplayed()
     }
 
-    def noFundsHasText(title, description) {
-        checkoutResult.noFundsText(title, description)
+    def noFundsText(title, description) {
+        waitFor({ checkoutResult.displayed })
+        return checkoutResult.noFundsText(title, description)
     }
 
-    def buttonDismissIsDisplayed() {
-        checkoutResult.buttonDismissDisplayed()
+    def buttonDismissDisplayed() {
+        waitFor({ checkoutResult.displayed })
+        return checkoutResult.buttonDismissDisplayed()
     }
 
-    def buttonBackToShopIsDisplayed() {
-        checkoutResult.buttonBackToShopDisplayed()
+    def buttonBackToShopDisplayed() {
+        waitFor({ checkoutResult.displayed })
+        return checkoutResult.buttonBackToShopDisplayed()
     }
 
 }

@@ -21,6 +21,7 @@ class ShopDemoPage extends Page {
     }
 
     def payWithAplazame(nif, card) {
+        waitFor { payWithAplazameButton.displayed }
         payWithAplazameButton.click()
         waitFor { aplazameCheckout.present }
         withFrame(aplazameCheckout) {
@@ -30,25 +31,25 @@ class ShopDemoPage extends Page {
 
     def warningIsDisplayed() {
         withFrame(aplazameCheckout) {
-            warningDisplayed()
+            return warningDisplayed()
         }
     }
 
     def noFundsHasText(title, description) {
         withFrame(aplazameCheckout) {
-            noFundsText(title, description)
+            return noFundsText(title, description)
         }
     }
 
     def buttonDismissIsDisplayed() {
         withFrame(aplazameCheckout) {
-            buttonDismissDisplayed()
+            return buttonDismissDisplayed()
         }
     }
 
     def buttonBackToShopIsDisplayed() {
         withFrame(aplazameCheckout) {
-            buttonBackToShopDisplayed()
+            return buttonBackToShopDisplayed()
         }
     }
 }

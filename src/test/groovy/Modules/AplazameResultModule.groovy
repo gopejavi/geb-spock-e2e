@@ -5,28 +5,26 @@ import geb.Module
 class AplazameResultModule extends Module {
 
     static content = {
-        modal { $("html").$(".modal-result") }
-        warningLogo { modal.$("img", src: "assets/images/result-warning.svg") }
-        warningTitle { modal.$("h3") }
-        warningDescription { modal.$(".description") }
-        buttonDismiss { moda.$("button", "ng-click": " \$modal.dismiss('ko-downpayment') ") }
-        buttonBackToShop { moda.$("button", message: " label.back2shop ") }
+        warningLogo { $("img", src: "assets/images/result-warning.svg") }
+        warningTitle { $("h3") }
+        warningDescription { $(".description") }
+        buttonDismiss { $("button", "ng-click": " \$modal.dismiss('ko-downpayment') ") }
+        buttonBackToShop { $("button", message: " label.back2shop ") }
     }
 
     def warningDisplayed() {
-        assert warningLogo.displayed
+        return warningLogo.displayed
     }
 
     def noFundsText(title, description) {
-        assert warningTitle == title
-        assert warningDescription == description
+        return warningTitle.text() == title && warningDescription.text() == description
     }
 
     def buttonDismissDisplayed() {
-        assert buttonDismiss.displayed
+        return buttonDismiss.displayed
     }
 
     def buttonBackToShopDisplayed() {
-        assert buttonBackToShop.displayed
+        return buttonBackToShop.displayed
     }
 }
