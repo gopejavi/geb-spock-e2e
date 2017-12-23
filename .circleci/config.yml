@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: gopejavi/geb-spock-e2e
-      - image: gopejavi/vokuro
     environment:
         GRADLE_OPTS: -Xmx1024m -XX:MaxMetaspaceSize=256m
         GRADLE_USER_HOME: .gradle-home
@@ -17,7 +16,7 @@ jobs:
             Xvfb :99 -screen 1 1280x1024x16 -nolisten tcp -fbdir /var/run > /dev/null 2>&1 &
             export DISPLAY=:99
             export FIREFOX_VERSION=56.0.1
-            ./gradlew --info -P baseUrl=http://127.0.0.1 --no-daemon chromeHeadlessTest
+            ./gradlew --info -P baseUrl=https://demo.aplazame.com --no-daemon chromeHeadlessTest
       - store_artifacts:
           path: build/spock-reports
       - save_cache:
