@@ -11,7 +11,7 @@ class AplazameCheckoutPage extends Page {
         modalCheckout { $("html").$(".modal-checkout") }
         nextCheckoutStepButton { modalCheckout.$("button", "ng-click": "checkout.next()") }
         nifInput { modalCheckout.$("input", name: "document_id") }
-        paymentMethod { modalCheckout.$("input", name: "payment_method") }
+        creditCardArea { $('.apz-choice-selector .-choice-wrapper').lastElement() }
         smsCode { modalCheckout.$("#sandbox").$("span", 1) }
         smsCodeInput { modalCheckout.$("#OtpSecureInput") }
 
@@ -22,7 +22,7 @@ class AplazameCheckoutPage extends Page {
         nextStep()
         fillPersonalData(nif)
         createNewCreditCard(card)
-        checkout()
+        nextStep()
         fillSmsCodeToAuthorizePayment()
     }
 
@@ -37,33 +37,19 @@ class AplazameCheckoutPage extends Page {
     }
 
     def createNewCreditCard(CreditCardData card) {
-        selectNewCreditCard()
+        waitFor { creditCardArea.displayed }
+        creditCardArea.click()
 
         WebElement active = driver.switchTo().activeElement()
         active.sendKeys(card.number)
+        sleep(100)
 
         active = driver.switchTo().activeElement()
         active.sendKeys(card.expiration)
+        sleep(100)
 
         active = driver.switchTo().activeElement()
         active.sendKeys(card.cvv)
-    }
-
-    def selectNewCreditCard() {
-        sleep(750) //Should not use but I could not do it in other way.
-        waitFor(2, {
-            def newCreditCard = paymentMethod.lastElement()
-            if (newCreditCard.displayed) {
-                newCreditCard.click()
-            } else
-                sleep(1500)
-            true
-        })
-    }
-
-    def checkout() {
-        sleep(500)
-        nextCheckoutStepButton.click()
     }
 
     def fillSmsCodeToAuthorizePayment() {

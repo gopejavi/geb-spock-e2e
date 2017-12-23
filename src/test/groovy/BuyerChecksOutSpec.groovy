@@ -3,10 +3,7 @@ import Pages.ShopDemoPage
 import Pages.ShopDemoSuccessPage
 import Utils.Const
 import geb.spock.GebReportingSpec
-import spock.lang.Issue
-import spock.lang.Narrative
-import spock.lang.Shared
-import spock.lang.Title
+import spock.lang.*
 
 import static Utils.DataObjectsHelper.createDataFrom
 
@@ -15,15 +12,18 @@ import static Utils.DataObjectsHelper.createDataFrom
 
 //Valeria is a user persona. She can always buy whatever and successfully pay with one card.
 @Narrative("""
-As Veleria
+As Valeria
 I want to pay with Aplazame
 So I can finalize my awesome purchase
 """)
 //this would link to the Jira/other User Story or task:
 @Issue("https://www.example.com")
 //examples of realted links, to show in reports.
-//@See("https://betabeers.com/post/desarrollador-qa-3271/", "https://aplazame.com/docs/api/making-requests/#datos-de-prueba")
-class PaySuccessSpec extends GebReportingSpec {
+@See([
+        "https://betabeers.com/post/desarrollador-qa-3271/",
+        "https://aplazame.com/docs/api/making-requests/#datos-de-prueba"
+])
+class BuyerChecksOutSpec extends GebReportingSpec {
 
     @Shared
     CreditCardData successCard = new CreditCardData("4111111111111111", "11/18", "000")
@@ -32,7 +32,7 @@ class PaySuccessSpec extends GebReportingSpec {
         given: "The shopping cart checkout page is ready"
         to ShopDemoPage
 
-        when: "I successfully pay with Aplazame"
+        when: "I pay with Aplazame"
         payWithAplazame(nif, card)
 
         then: "I am at success page with success message"
@@ -48,7 +48,7 @@ class PaySuccessSpec extends GebReportingSpec {
         given: "The shopping cart checkout page is ready"
         to ShopDemoPage
 
-        when: "I successfully pay with Aplazame"
+        when: "I pay with Aplazame"
         payWithAplazame(nif, card)
 
         then: "I see a warning about the bank denying the purchase"
